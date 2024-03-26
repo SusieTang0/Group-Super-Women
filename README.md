@@ -1,3 +1,3 @@
 # Group-Super-Women
 
-this is a plase to share our project
+this is a place to share our project
