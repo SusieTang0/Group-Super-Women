@@ -56,7 +56,7 @@ function userCheck(){
   let userID = window.localStorage.getItem('userID');
   if(userID == null){
     alert(`Please login first.`);
-    window.location.href = 'login-en.html';
+    window.location.href = 'pages/login-en.html';
   }else{
     window.location.href = 'appointment-en.html';
   }
