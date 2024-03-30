@@ -1,8 +1,8 @@
 # Group-Super-Women
 
-Guests = ["contactID", "firstname", "lastname","emailAddress","subject","message"]
+Guests = ["contactID", "firstname", "lastname","email","subject","message"]
 
-Customers = ["userID", "firstname", "lastname", "emailAddress", "phoneNumber", "password", "avatar","address", "city", "province", "country", "postcode", "contactName", "contactPhone", "paymentID"]
+Customers = ["userID", "firstname", "lastname", "email", "phone", "password", "avatar","address", "city", "province", "country", "postcode", "contactName", "contactPhone", "paymentID"]
 
 
 Appointments = ["orderID", "serviceName", "servicePrice", "apptDate", "apptTime","timeStamp", "status", "userID", "paymentID"];
