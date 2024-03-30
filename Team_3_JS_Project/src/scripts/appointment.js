@@ -4,6 +4,22 @@
 */
 
 'use strict';
+
+class Appoitment {
+  constructor(orderID, serviceName, servicePrice, apptDate, apptTime, timeStamp, status, paymentID){
+    this.appointmentId = orderID,
+    this.serviceName = serviceName,
+    this.servicePrice = servicePrice,
+    this.apptDate = apptDate,
+    this.apptTime = apptTime,
+    this.createdTimeStamp = timeStamp,
+    this.status = status,
+    this.paymentId = paymentID
+  }
+}
+
+const appt = new Appoitment();
+
 let bookingOrder = 'AE08R3';
 let dateMsg = "";
 let timeMsg = "";
@@ -43,9 +59,12 @@ for (let k = 0; k < serItems.length; k++) {
     serItems[k].onclick = function() {
     if(servChecked != k) {
       servDetail[0].innerHTML = "#"+ bookingNumber();
-    servDetail[1].innerHTML = serItems[k].id;
-    servDetail[5].innerHTML = "$"+serItems[k].value;
-    servChecked = k;
+      servDetail[1].innerHTML = serItems[k].id;
+      servDetail[5].innerHTML = "$"+serItems[k].value;
+      appt.appointmentId = bookingNumber();
+      appt.serviceName = serItems[k].id;
+      appt.servicePrice = serItems[k].value;
+      servChecked = k;
     if((dateChecked >= 0) || (timeChecked > 0)) resetDateTime();
     }
     }
@@ -89,33 +108,31 @@ decMonth[0].onclick = function() {
 }
 
 function hookuptime(){
-    let timelist = document.querySelectorAll(".timetable li");
-    for (let j = 0; j < timelist.length; j++) {
-
+  let timelist = document.querySelectorAll(".timetable li");
+  for (let j = 0; j < timelist.length; j++) {
     timelist[j].onclick = function(){
+      let actTime = document.querySelectorAll(".timetable li.active");
 
-        let actTime = document.querySelectorAll(".timetable li.active");
+      if (dateChecked == 0){
+          alert("Please choose a date first!");
+      }
+      else{
+      if ((actTime.length < 1)) {
+          timelist[j].classList.toggle("active");
+      } else {
+              actTime[0].classList.toggle("active");
+              timelist[j].classList.toggle("active");
+      }
 
-        if (dateChecked == 0){
-            alert("Please choose a date first!");
-        }
-        else{
-        if ((actTime.length < 1)) {
-            timelist[j].classList.toggle("active");
-    } else {
-            actTime[0].classList.toggle("active");
-            timelist[j].classList.toggle("active");
-    }
+      timeChecked = 1;
 
-    timeChecked = 1;
+      timeMsg = timelist[j].innerHTML;
 
-    timeMsg = timelist[j].innerHTML;
-
-    servDetail[3].innerHTML = timeMsg;
-
-    }
-};
-}
+      servDetail[3].innerHTML = timeMsg;
+      appt.apptTime = timeMsg;
+      }
+    };
+  }
 }
 
 function findDays(txtString) {
@@ -135,39 +152,39 @@ function makeCalender(theMonth,theYear){
     let curday = new Date(theYear,theMonth,1);
     let day1stMonth = curday.getDay();
 
-for (let di = 1; di <= day1stMonth; di++){
-    calul.innerHTML += "<li><span class=\"inactive\">&nbsp;</span></li>";
-}
+    for (let di = 1; di <= day1stMonth; di++){
+        calul.innerHTML += "<li><span class=\"inactive\">&nbsp;</span></li>";
+    }
 
-if  ((theMonth == 1) && ((theYear & 3) == 0 && ((theYear % 25) != 0 || (theYear & 15) == 0)))
-{
-    dayofMonth = daysInMonth[theMonth] +1;
-} else
-{
-    dayofMonth = daysInMonth[theMonth];
-}
+    if  ((theMonth == 1) && ((theYear & 3) == 0 && ((theYear % 25) != 0 || (theYear & 15) == 0)))
+    {
+        dayofMonth = daysInMonth[theMonth] +1;
+    } else
+    {
+        dayofMonth = daysInMonth[theMonth];
+    }
 
-for (let dj = 1; dj <= dayofMonth; dj++){
-if (( theMonth == thisMonth ) && (dj < thisDate) && (theYear == thisYear) ){
-    calul.innerHTML += "<li><span class=\"inactive\">" + dj + "</span></li>";
-} else {
+    for (let dj = 1; dj <= dayofMonth; dj++){
+      if (( theMonth == thisMonth ) && (dj < thisDate) && (theYear == thisYear) ){
+          calul.innerHTML += "<li><span class=\"inactive\">" + dj + "</span></li>";
+      } else {
 
-if ((dateChecked == 1) && (selectedDay.getDate() == dj) && (selectedDay.getMonth() == theMonth) && (selectedDay.getFullYear() == theYear)){
-    calul.innerHTML += "<li><span class=\"active\">" + dj + "</span></li>";
-} else {
-    calul.innerHTML += "<li><span>" + dj + "</span></li>";
-}
-}
-}
+      if ((dateChecked == 1) && (selectedDay.getDate() == dj) && (selectedDay.getMonth() == theMonth) && (selectedDay.getFullYear() == theYear)){
+          calul.innerHTML += "<li><span class=\"active\">" + dj + "</span></li>";
+      } else {
+          calul.innerHTML += "<li><span>" + dj + "</span></li>";
+      }
+      }
+    }
 
-for (let dk = 1; dk <= 42 - (daysInMonth[thisMonth]+day1stMonth); dk++){
-    calul.innerHTML += "<li><span class=\"inactive\">&nbsp;</span></li>";
-} 
+    for (let dk = 1; dk <= 42 - (daysInMonth[thisMonth]+day1stMonth); dk++){
+        calul.innerHTML += "<li><span class=\"inactive\">&nbsp;</span></li>";
+    } 
 
-monthLable.innerHTML = months[theMonth];
-yearLable.innerHTML = theYear;
+    monthLable.innerHTML = months[theMonth];
+    yearLable.innerHTML = theYear;
 
-hookupDays();
+    hookupDays();
 
 }
 
@@ -210,6 +227,14 @@ function hookupDays(){
         dateMsg = weeks[selday.getDay()] + ", " + months[curMonthN] + " " + findDays(dateTxt) + ", " + curYearN;
     
         servDetail[2].innerHTML = dateMsg;
+
+        // add the value of apptDate
+        const apptMonth= curMonthN+1;
+        const apptDay = dateTxt;
+        const apptWeekday = weeks[selday.getDay()];
+        appt.apptDate = `${apptWeekday}, ${curYearN}-${(apptMonth<10)?"0"+apptMonth:apptMonth}-${(apptDay<10)?"0"+apptDay:apptDay}`;
+        
+
         document.getElementById("date-content").innerHTML = dateMsg; 
         dateChecked = 1;
         selectedDay =selday;
@@ -220,30 +245,30 @@ function hookupDays(){
     }
         }
     }
-    }
-    }
+  }
+}
     
-    function resetDateTime(){
-        dateChecked = 0;
-        servDetail[2].innerHTML = "Choose Date.";
-        servDetail[3].innerHTML = "Choose time.";
-        document.getElementById("date-content").innerHTML = "Please choose a date first.";
+function resetDateTime(){
+    dateChecked = 0;
+    servDetail[2].innerHTML = "Choose Date.";
+    servDetail[3].innerHTML = "Choose time.";
+    document.getElementById("date-content").innerHTML = "Please choose a date first.";
 
-        calul.innerHTML = "";
-        makeCalender(curMonthN,curYearN);
+    calul.innerHTML = "";
+    makeCalender(curMonthN,curYearN);
 
-        let actTime = document.querySelectorAll(".timetable li.active");
-        if(actTime.length >= 1) {
-            actTime[0].classList.toggle("active");
-        }
-        timeChecked = 0;
+    let actTime = document.querySelectorAll(".timetable li.active");
+    if(actTime.length >= 1) {
+        actTime[0].classList.toggle("active");
     }
+    timeChecked = 0;
+}
 
-    function makeTimeTable(datetime){
+function makeTimeTable(datetime){
 
-        let timetblele = document.querySelector('.timetable');
+    let timetblele = document.querySelector('.timetable');
 
-        timetblele.innerHTML = "";
+    timetblele.innerHTML = "";
 
     if((datetime.getDay() == 0) || (datetime.getDay() == 6) ){
         for(let j = 9; j <= 14; j++){
@@ -254,22 +279,18 @@ function hookupDays(){
             timetblele.innerHTML += "<li>" + (i<=12 ? i : i-12)+":00 " + ((i<12 ? "am" : "pm")) + "</li>";
         }
     }
-hookuptime();
-    }
-
-function savelocalinfo(){
-if((servChecked != -1)&&(dateChecked != 0)&&(timeChecked != 0)){
-    localStorage.setItem('serviceID', servDetail[0].innerHTML);
-    localStorage.setItem('aptService', servDetail[1].innerHTML);
-    localStorage.setItem('aptDate', servDetail[2].innerHTML);
-    localStorage.setItem('aptTime', servDetail[3].innerHTML);
-    localStorage.setItem('aptPrice', servDetail[5].innerHTML);
-    return true;
-} else {
-    alert("Please finish making the appointment!")
-    return false;
+    hookuptime();
 }
 
+function savelocalinfo(){
+  if((servChecked != -1)&&(dateChecked != 0)&&(timeChecked != 0)){
+    const jsonAppt = JSON.stringify(appt);
+      localStorage.setItem('apptObj', jsonAppt);
+      return true;
+  } else {
+      alert("Please finish making the appointment!")
+      return false;
+  }
 }
 
 function bookingNumber(){
@@ -284,3 +305,4 @@ function bookingNumber(){
   
   return result;
 }
+

@@ -1,44 +1,89 @@
 'use strict';
-let donation;
+
+var appt = "";
+var user = "";
+class Payment{
+  constructor(paymentId, cardType,cardNumber, ownerName, servicePrice, serviceFee,donation, totalAmount){
+    this.paymentId = paymentId, 
+    this.cardType = cardType,
+    this.cardNumber = cardNumber, 
+    this.ownerName = ownerName, 
+    this.servicePrice = servicePrice, 
+    this.serviceFee = serviceFee,
+    this.donation = donation, 
+    this.totalAmount = totalAmount
+  }
+}
+
+const payment = new Payment();
 
 window.addEventListener('load',()=>{
-  document.getElementById('serviceStaff-result').innerHTML=window.localStorage.getItem('serviceID') ;
-  document.getElementById('serviceName-result').innerHTML=window.localStorage.getItem('aptService') ;
-  document.getElementById('sericeDate-result').innerHTML=window.localStorage.getItem('aptDate') ;
-  document.getElementById('serviceTime-result').innerHTML=window.localStorage.getItem('aptTime') ;
-  document.getElementById('servicePriceAmount-result').innerHTML=window.localStorage.getItem('aptPrice');
   
-  
-  
-  alert(donation);
-
-  alert(serviceFee);
- 
-  
+  //userDetails(user,"client-detial");
+  apptDetails();
 
   //document.getElementById('serviceAmount-result').innerHTML=localStorage.getItem('aptPrice') ;
  
 });
 
-function handleSelection() {
-  var select = document.getElementById("mySelect"); 
-  donation = parseFloat(select.value); 
-  let priceString = window.localStorage.getItem('aptPrice');
-  let price = parseInt(priceString.substring(1,priceString.length));
-  let serviceFee = 0;
-  if(price>100){
-    serviceFee += price*0.05;
+//document.getElementById('bookingNow').onclick=()=>{
+  
+  
+//}
+
+function userDetails(){
+  user = JSON.parse(window.localStorage.getItem('jsonUser'));
+  document.getElementById("client-details").innerHTML =
+             `Name: ${user.firstname} ${user.lastname}<br>
+              Email: ${user.email}<br>
+              Phone Number: ${user.phone}<br>`;
+}
+
+function apptDetails(){
+  appt = JSON.parse(window.localStorage.getItem('apptObj'));
+  alert(appt);
+  document.getElementById("appt-details").innerHTML = 
+        `#${appt.appointmentId}<br>
+        ${appt.serviceName}<br>
+        ${appt.apptDate}<br>
+        ${appt.apptTime}<br>
+        1hr<br>
+        $${appt.servicePrice}<br><br>
+        ` ;
+ 
+  
+  getServiceFee(appt.servicePrice);
+  getTotal();
+}
+
+
+function getTotal(){
+  if(payment.serviceFee===null){
+    payment.totalAmount =  parseFloat(payment.servicePrice).
+  }else{
+
   }
-
-  document.getElementById('servicePriceAmount-result').innerHTML=window.localStorage.getItem('aptPrice');
-  
-    serviceFee += price*0.05;
-    let total = (price +donation + donation).toFixed(2);
-  document.getElementById('serviceFeeAmount-result').innerHTML=total;
-  console.log("Selected value: " + selectedValue); 
+  payment.totalAmount = parseFloat(payment.servicePrice)+parseFloat(payment.serviceFee)+parseFloat(payment.serviceFee)
+  document.getElementById("totalAmount").innerHTML = "$" + (parseFloat(payment.totalAmount).toFixed(2));
+  return;
 }
 
-document.getElementById('bookingNow').onclick=()=>{
-  
-  
+function getServiceFee(price){
+  if(price>100){
+    payment.serviceFee = (price * 0.05).toFixed(2);
+    document.getElementById("serviceFee").innerHTML ="$" + payment.serviceFee;
+    getTotal();
+  }
+  return;
 }
+
+
+
+
+function handleSelection() {
+  payment.donation = parseFloat(document.getElementById("donation").value).toFixed(2); 
+  getTotal();
+  return;
+}
+
+

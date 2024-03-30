@@ -91,17 +91,9 @@ File name: Smith's clinic html template
                 <div class="col-xl-8 align-item-center">
                     <div class="left-column ">
                         <div class="payment-title"><h3 >Client Details</h3></div>
-                                <form class="client-form">
-                                    <div class="form-group mb-3">
-                                        <label id="name">Name: John Smith</label>
-                                    </div>
-                                    <div class="form-group mb-3">
-                                        <label id="email">Email: john_smith@smith.clinic.com</label>
-                                    </div>
-                                    <div class="form-group mb-3">
-                                        <label id="phone" >Phone Number: 514-523-2333</label>
-                                    </div>
-                               </form>
+                        <form id="client-details" class="client-form">
+                                   
+                        </form>
                         
                         
                         <!-- Payment Form -->
@@ -146,28 +138,20 @@ File name: Smith's clinic html template
                         <div class="text-lg-right mb-3"> 
                             <div class="booking-detail">
                                 <h3 class="payment-title">Appointment Details</h3>
-                                <section>
-                                    <div id="serdet-result" class="ps-4">
-                                      <p id="serviceStaff-result">Order #</p>
-                                    <p id="serviceName-result">Choose a service.</p>
-                                    <p id="sericeDate-result">Choose date.</p>
-                                    <p id="serviceTime-result">Choose time.</p>
-                                   
-                                    <p id="servicePeriod-result">1 hr</p>
-                                    <p id="servicePriceAmount-result">$0</p>
+                                <div id="appt-details">
                                 </div>
                             </section>
                             </div>
                             <div class="booking-total">
-                                <div > <h6>Payment Details</h6>   </div>
+                                <div><h6>Payment Details</h6></div>
                                 <div class="form-group row py-3">
                                   <div class="col-xl-6">Service Fee<br>(5% when > $100)</div>
-                                  <div class="col-xl-6 text-xl-end py-3 ps-2" id="serviceFeeAmount-result">$0</div>
+                                  <div class="col-xl-6 text-xl-end py-3 ps-2" id="serviceFee">$0</div>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-xl-6">Donation: </div>
                                     <div class="col-xl-3">&nbsp; </div>
-                                    <select class="col-xl-3 ps-2" name="donation" id="donation-result" onchange="return handleSelection();">
+                                    <select class="col-xl-3 ps-2" name="donation" id="donation" onchange="return handleSelection();">
                                       <option value="0" class="text-xl-end">$0</option>
                                       <option value="5" class="text-xl-end">$5</option>
                                       <option value="10" class="text-xl-end">$10</option>
@@ -176,12 +160,12 @@ File name: Smith's clinic html template
                                 <hr>
                                 <div class="form-group row">
                                     <div class="col-xl-6">Total</div>
-                                    <div class="col-xl-6 text-xl-end ps-2" id="serviceTotalAmount-result">$0</div>
+                                    <div class="col-xl-6 text-xl-end ps-2" id="totalAmount">$0</div>
                                    
                                 </div>
                             </div>
                             <div class="booking-button">
-                                <button type="submit" id= "bookingNow" class="btn btn-primary btn-submit mb-3"><a href="book-completed-en.html">Booking Now</a></button>
+                                <button id= "bookingNow" class="btn btn-primary btn-submit mb-3"><a href="book-completed-en.html">Booking Now</a></button>
                             </div>
                         </div>
                     </div> 
