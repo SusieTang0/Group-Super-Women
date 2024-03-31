@@ -11,7 +11,7 @@ const PORT = 3000;
 
 const app = express();
 
-app.use(express.static(path.join(__dirname, './src'), { index: 'index-en.html' }));
+app.use(express.static(path.join(__dirname, './src')));
 
 app.use(appointment);
 app.use(customer);
