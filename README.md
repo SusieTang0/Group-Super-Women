@@ -2,10 +2,16 @@
 
 Contact = ["contactId", "firstname", "lastname","email","subject","message"]
 
-Customer = ["customerId", "firstname", "lastname", "email", "phone", "password", "avatar","address", "city", "province", "country", "postcode", "contactName", "contactPhone", "paymentId"]
+Customer = ["customerId", "firstname", "lastname", "email", "phone", "password", "avatar","address", "city", "province", "country", "postcode", "contactName", "contactPhone", "emailMsg", "paymentId"]
 
 
 Appointment = ["appointmentId", "serviceName", "servicePrice", "apptDate", "apptTime","timeStamp", "status", "userID", "paymentID"];
 
 
 Payment= ["paymentId", "cardType", "cardNumber", "ownerName","servicePrice","serviceFee","donation","totalAmount"];
+
+
+
+
+// APIs
+
