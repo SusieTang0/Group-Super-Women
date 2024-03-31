@@ -59,7 +59,7 @@ function apptDetails(){
 
 function getTotal(){
   if(payment.serviceFee===null){
-    payment.totalAmount =  parseFloat(payment.servicePrice).
+    payment.totalAmount =  parseFloat(payment.servicePrice).toFixed(2);
   }else{
 
   }

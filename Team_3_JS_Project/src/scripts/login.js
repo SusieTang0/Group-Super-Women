@@ -60,7 +60,6 @@ function storeCusInfo(){
     custom[5] = localStorage.getItem('password');
     custom[6] = localStorage.getItem('../assets/icons/person-grey-40.png');
     customs.push(custom);
-    alert(customs);
 }
 
 
