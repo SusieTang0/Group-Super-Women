@@ -5,15 +5,6 @@ const client = require('../db');
 const paymentRouter = express.Router();
 paymentRouter.use(bodyParser.json());
 
-class paymentDTO {
-  constructor(id, name, email) {
-    this.id = id;
-    this.name = name;
-    this.email = email;
-  }
-}
-
-
 paymentRouter.get('/', async (req, res) => {
   try {
     // const users = await client.db().collection('appointment').find().toArray();
