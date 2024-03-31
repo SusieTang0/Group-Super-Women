@@ -44,8 +44,8 @@ function loginCheck(){
       ${first_name}
       </a>
       <ul class="dropdown-menu dropdown-menu-end" id="dropdownInfo">
-      <li><a class="dropdown-item" href="personal-info-en.html">Personal Information</a></li>
-      <li><a class="dropdown-item" href="appointment-display.html" id="totalAppoint" onclick="toAppointDis();">Appointments Management</a></li>
+      <li><a class="dropdown-item" href="pages/personal-info-en.html">Personal Information</a></li>
+      <li><a class="dropdown-item" href="pages/appointment-display.html" id="totalAppoint" onclick="toAppointDis();">Appointments Management</a></li>
       <li><a class="dropdown-item" href="index-en.html" onclick="logOut()">Log Out</a></li>
       </ul>`;
     }
@@ -56,7 +56,7 @@ function userCheck(){
   let userID = window.localStorage.getItem('userID');
   if(userID == null){
     alert(`Please login first.`);
-    window.location.href = 'pages/login-en.html';
+    window.location.href = 'login-en.html';
   }else{
     window.location.href = 'appointment-en.html';
   }
