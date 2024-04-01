@@ -1,11 +1,6 @@
 {
   "dependencies": {
     "express": "^4.19.2",
-<<<<<<< HEAD
-    "mongodb": "^6.5.0",
-    "mongoose": "^8.2.4"
-  }
-=======
     "mongodb": "^6.5.0"
   },
   "name": "team_3_js_project",
@@ -19,5 +14,4 @@
   "author": "",
   "license": "ISC",
   "description": ""
->>>>>>> cd6f7059ad283e822226213f14a4f3b3bb55f3c9
 }
