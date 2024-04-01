@@ -5,7 +5,7 @@ const client = require('../db');
 const contactRouter = express.Router();
 contactRouter.use(bodyParser.json());
 
-contactRouter.post('/', (req, res) => {
+contactRouter.post('/insertContact', (req, res) => {
 
   
 });

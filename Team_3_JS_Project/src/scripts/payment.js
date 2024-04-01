@@ -2,9 +2,9 @@
 
 var appt = "";
 var user = "";
+
 class Payment{
-  constructor(paymentId, cardType,cardNumber, ownerName, servicePrice, serviceFee,donation, totalAmount){
-    this.paymentId = paymentId, 
+  constructor(cardType,cardNumber, ownerName, servicePrice, serviceFee,donation, totalAmount){
     this.cardType = cardType,
     this.cardNumber = cardNumber, 
     this.ownerName = ownerName, 
@@ -12,10 +12,20 @@ class Payment{
     this.serviceFee = serviceFee,
     this.donation = donation, 
     this.totalAmount = totalAmount
+    this.needRefund = false;
   }
 }
 
 const payment = new Payment();
+var cardTypeItems = document.getElementsByTagName();
+var cardType;
+cardTypeItems.array.forEach((element) => {
+  element.addEventListener("change",()=>{
+    cardType = element.value;
+  })
+});
+
+
 
 window.addEventListener('load',()=>{
   
@@ -52,18 +62,16 @@ function apptDetails(){
   
   payment.servicePrice = appt.servicePrice;
   getServiceFee();
-  
 }
 
 
 function getTotal(){
-  payment.totalAmount += payment.servicePrice ;
-  payment.totalAmount += parseFloat(payment.servicePrice).toFixed(2);
-  
-  if(payment.donation != null){
-    payment.totalAmount += parseFloat(payment.donation).toFixed(2);
-  }
-  document.getElementById("totalAmount").innerHTML = "$" + (parseFloat(payment.totalAmount).toFixed(2));
+  var total = parseFloat(payment.servicePrice) +parseFloat(payment.serviceFee);
+  payment.donation = parseFloat(document.getElementById("donation").value);
+  var theDonation  = parseFloat(payment.donation); 
+
+  payment.totalAmount = (total + theDonation).toFixed(2);
+  document.getElementById("totalAmount").innerHTML = `$${parseFloat(payment.totalAmount)}`;
   return;
 }
 
@@ -72,18 +80,24 @@ function getServiceFee(){
   if(price>=100){
     payment.serviceFee= (price* 0.05).toFixed(2);
     document.getElementById("serviceFee").innerHTML ="$" + payment.serviceFee;
+    payment.totalAmount =( price + price * 0.05).toFixed(2)
     getTotal();
   }
   return;
 }
 
+function submitPayment(){
+  
+  postPaymentInfo()
+  var appointmentId = sendAppointmentToServer(appt);
+  
+}
 
 
 
-function handleSelection() {
-  payment.donation = parseFloat(document.getElementById("donation").value).toFixed(2); 
-  getTotal();
-  return;
+function postPaymentInfo(){
+  // fetch something here
+
 }
 
 
