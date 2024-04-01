@@ -49,7 +49,7 @@ appointmentRouter.post('/insertAppointment', async (req, res) => {
       paymentId: appt.paymentId,
       feedbackCompleted: false
     });
-    res.status(201).json({ message: 'Appointment created successfully' });
+    res.status(201).json({ appointmentId: appointmentId });
   } catch (error) {
     console.error('Error creating appointment:', error);
     res.status(500).json({ error: 'Internal server error' });
@@ -61,14 +61,8 @@ appointmentRouter.delete('/deleteAppointment', async (req, res) => {
     const appointmentCollection = client.db('clinic').collection('appointment');
 
     let appointmentId = parseInt(req.query.appointmentId);
-    await appointmentCollection.findOneAndDelete({appointmentId: appointmentId}, function (err) { 
-      if (err){ 
-        res.status(500).json({ error: 'Internal server error' });
-      } 
-      else{ 
-        res.status(200).json({ message: 'Appointment was deleted'}); 
-      } 
-    });
+    let response = await appointmentCollection.findOneAndDelete({appointmentId: appointmentId});
+    res.status(200).json({paymentId: response.paymentId});
   } catch (error) {
     console.error('Error deleting appointment:', error);
     res.status(500).json({ error: 'Internal server error' });
