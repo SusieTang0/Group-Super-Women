@@ -19,7 +19,7 @@ const payment = new Payment();
 
 window.addEventListener('load',()=>{
   
-  //userDetails(user,"client-detial");
+  //userDetails();
   apptDetails();
 
   //document.getElementById('serviceAmount-result').innerHTML=localStorage.getItem('aptPrice') ;
@@ -41,7 +41,6 @@ function userDetails(){
 
 function apptDetails(){
   appt = JSON.parse(window.localStorage.getItem('apptObj'));
-  alert(appt);
   document.getElementById("appt-details").innerHTML = 
         `#${appt.appointmentId}<br>
         ${appt.serviceName}<br>
@@ -50,27 +49,28 @@ function apptDetails(){
         1hr<br>
         $${appt.servicePrice}<br><br>
         ` ;
- 
   
-  getServiceFee(appt.servicePrice);
-  getTotal();
+  payment.servicePrice = appt.servicePrice;
+  getServiceFee();
+  
 }
 
 
 function getTotal(){
-  if(payment.serviceFee===null){
-    payment.totalAmount =  parseFloat(payment.servicePrice).toFixed(2);
-  }else{
-
+  payment.totalAmount += payment.servicePrice ;
+  payment.totalAmount += parseFloat(payment.servicePrice).toFixed(2);
+  
+  if(payment.donation != null){
+    payment.totalAmount += parseFloat(payment.donation).toFixed(2);
   }
-  payment.totalAmount = parseFloat(payment.servicePrice)+parseFloat(payment.serviceFee)+parseFloat(payment.serviceFee)
   document.getElementById("totalAmount").innerHTML = "$" + (parseFloat(payment.totalAmount).toFixed(2));
   return;
 }
 
-function getServiceFee(price){
-  if(price>100){
-    payment.serviceFee = (price * 0.05).toFixed(2);
+function getServiceFee(){
+  const price= parseFloat(payment.servicePrice);
+  if(price>=100){
+    payment.serviceFee= (price* 0.05).toFixed(2);
     document.getElementById("serviceFee").innerHTML ="$" + payment.serviceFee;
     getTotal();
   }

@@ -25,6 +25,8 @@ customerRouter.get('/', async (req, res) => {
 });
 
 customerRouter.post('/', (req, res) => {
+
+  
 });
 
 module.exports = customerRouter;
