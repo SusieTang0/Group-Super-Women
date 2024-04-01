@@ -5,7 +5,7 @@ const client = require('../db');
 const paymentRouter = express.Router();
 paymentRouter.use(bodyParser.json());
 
-paymentRouter.get('/', async (req, res) => {
+paymentRouter.get('/insertPayment', async (req, res) => {
   try {
     // const users = await client.db().collection('appointment').find().toArray();
     // res.json(appointment);

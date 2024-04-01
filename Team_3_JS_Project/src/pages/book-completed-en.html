@@ -38,7 +38,7 @@ File name: Smith's clinic html template
             
         <nav class="navbar navbar-expand-xl px-3 py-4">
     
-            <a href="index-en.html"><img src="../assets/images/clinic-logo-en.png" width="250" style="padding: 20px 30px 20px 0" alt="Clinic Logo" title="Home Page"></a>
+            <a href="../index-en.html"><img src="../assets/images/clinic-logo-en.png" width="250" style="padding: 20px 30px 20px 0" alt="Clinic Logo" title="Home Page"></a>
 
             <!-- Hamburger menu icon -->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,7 +49,7 @@ File name: Smith's clinic html template
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav" >
                 <ul class="navbar-nav">
                 <li class="nav-item active">
-                    <a class="nav-link" aria-current="page" href="index-en.html">Home</a>
+                    <a class="nav-link" aria-current="page" href="../index-en.html">Home</a>
                 </li>
                 
                 <li class="nav-item">
@@ -81,16 +81,17 @@ File name: Smith's clinic html template
                     <div><h3>Your appointment is completed!</h3></div>
                     <div class="row ">
                     <div class="col-xl-1">&nbsp;</div>
-                    <div class="col-xl-7">
-                        <p>Service : Urgent care <br>
-                        Appointment # : U2W7G6 <br>
-                        Date : Friday, February 16, 2024 <br>
-                        Hour : 10:00 ( Time zone: EST ) <br>
+                    <div id="completedInfo" class="col-xl-7">
+                        <p>Service : <span id="serviceName">&nbsp;</span> <br>
+                        Appointment Number:<span id="appointmentId">&nbsp;</span><br>
+                        Date : <span id="apptDate">&nbsp;</span><br>
+                        Time : <span id="apptTime">&nbsp;</span>( Time zone: EST ) <br>
                         Location : Smith's Clinic <br>
                         Address : 320 St-Jean , local 2-C4 (2ième étage), <br>
                         DDO, 1E3 5W7, Canada <br>
-                        Cost :  $320 <br>
-                        Payment: In person</p>
+                        Cost : <span id="servicePrice">&nbsp;</span><br>
+                        <br>
+                        *You can reschedule your appointment before <em><strong id="rescheduleDate">&nbsp;</strong></em>.
                     </div>
                     <div class="col-xl-3 ">
                         <div class ="row" >
