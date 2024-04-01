@@ -86,18 +86,27 @@ function getServiceFee(){
   return;
 }
 
-function submitPayment(){
-  
-  postPaymentInfo()
-  var appointmentId = sendAppointmentToServer(appt);
-  
+function submitPayment(ifPass){
+
+  var validationResult = validateForm();
+  payment.cardType = getCardType();
+  payment.cardNumber = document.getElementById("cardNumber").value;
+
+
+  var paymentID = "123456";// here to call the function postPaymentInfo(payment),and get the paymentId
+  if(ifPass === false){
+    var appointmentId = sendAppointmentToServer(appt);
+  }
+ 
+  localStorage.setItem("appointmentId",appointmentId);
+
+  appt.paymentId = payment.
+  createAppointment(appt);
 }
 
 
-
-function postPaymentInfo(){
-  // fetch something here
-
+function validateForm(){
+  
 }
 
 

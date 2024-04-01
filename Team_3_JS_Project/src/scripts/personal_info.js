@@ -147,7 +147,7 @@ function showInfoInForm(custom){
 
 
 function infoCancel(){
-  window.location.href = 'personal-info-en.html';
+  window.location.href = 'personal-info.html';
   return;
 };
 
@@ -193,6 +193,6 @@ function infoSubmit(){
 
     
     localStorage.setItem('edited', true);
-    window.location,href = "personal-info-en.html";
+    window.location,href = "personal-info.html";
     return;
 }

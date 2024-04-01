@@ -43,7 +43,7 @@ function setCustom(){
         
         
         window.alert("Welcome to Smith's Clinic!");
-        window.location.href = 'index-en.html';
+        window.location.href = 'index.html';
        
     }
   }
