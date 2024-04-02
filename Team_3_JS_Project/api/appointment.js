@@ -81,9 +81,9 @@ appointmentRouter.put('/updateAppointment/:appointmentId', async (req, res) => {
       servicePrice: req.body.servicePrice
     }
     await appointmentCollection.findOneAndUpdate({appointmentId: appointmentId}, { $set: updatedData});
-    res.status(204).send({ message: 'Appointment updated successfully' });
+    res.status(204).json({ message: 'Appointment updated successfully' });
   } catch (error) {
-    console.error('Error creating appointment:', error);
+    console.error('Error updating appointment:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });

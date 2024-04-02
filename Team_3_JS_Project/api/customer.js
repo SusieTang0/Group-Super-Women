@@ -33,7 +33,7 @@ function generateToken(customer) {
       country: customer.country,
       postcode: customer.postcode,
       contactName: customer.contactName,
-      contactPhon: customer.contactPhone,
+      contactPhone: customer.contactPhone,
       acceptEmailMsg: customer.acceptEmailMsg
   };
   // Set the expiration time of JWT
@@ -147,6 +147,33 @@ customerRouter.post('/login', async (req, res) => {
   } catch (error) {
       console.error('Error logging in:', error);
       res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+customerRouter.put('/updateCustomer/:customerId', async (req, res) => {
+  try {
+    const customerCollection = client.db('clinic').collection('customer');
+
+    const customerId = parseInt(req.params.customerId);
+    const updatedData = {
+      firstname: req.body.firstname,
+      lastname: req.body.lastname, 
+      email: req.body.email,
+      phone: req.body.phone,
+      avatar: req.body.avatar,
+      city: req.body.city,
+      province: req.body.province,
+      country: req.body.country,
+      postcode: req.body.postcode,
+      contactName: req.body.contactName,
+      contactPhone: req.body.contactPhone,
+      acceptEmailMsg: req.body.acceptEmailMsg
+    }
+    await customerCollection.findOneAndUpdate({customerId: customerId}, { $set: updatedData});
+    res.status(204).json({ message: 'Customer updated successfully' });
+  } catch (error) {
+    console.error('Error updating customer:', error);
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
 
