@@ -4,9 +4,27 @@
 // Script Date: March 11, 2024
 
 'use strict';
-import { getAppointments } from "./fetchAppointment.js";
-getAppointments(1);
+import { getAppointments, getAppointmentTimes, createAppointment, deleteAppointment, updateAppointment } from "./fetchAppointment.js";
+let list = await getAppointments(1);
+let response = await getAppointmentTimes("2024-04-10", "Blood Test");
+
 // appointment = [orderNumber,service,appointmentDate,bookingDate,status,paymentID];
+let createdApptData = {
+  apptDate: "2024-04-10", // value to be taken when selected on the html page. 
+  apptTime: "05:00 PM", // value to be taken when selected on the html page.
+  customerId: 1,   // will be taken from localStorage the customerId after user signs in
+  paymentId: 6,   // NEED TO GET LIST OF PAYMENTS AND ADD 1 TO IT.
+  serviceName: "Blood Test",  // value to be taken when selected on the html page.
+  servicePrice: 30, // value to be taken when selected on the html page.
+  status: "Uncompleted"  // will always be this when creating a new appointment
+}
+let updatedData = {
+  apptDate: "2024-05-01", // changed value to be taken when changing date on the html page. 
+  apptTime: "09:00 AM", // changed time to be taken when changing time on the html page.
+  serviceName: "X-Ray",  // changed value to be taken when changing serviceName on the html page. 
+  servicePrice: 500 // changed value to be taken when changing servicePrice on the html page. 
+}
+
 var appointmentList;
 var feedbackList = new Array();
 
