@@ -44,7 +44,7 @@ main {
   width: 100%;
   height: auto;
   background-color: white;
-  margin: 30px 0;
+
   
   .service-content {
 
@@ -73,35 +73,7 @@ main {
     color: white;
   }
 
-  .button-content p{
-      width: 90%;
-      margin: 50px 5%;
-      padding: 6px;
-      height: 40px;
-      color:white;
-      font-weight: bold;
-      background-color: #0156adcc;
-      border: none;
-      border-radius: 10px;
-      text-align: center;
-  }
-
- 
-  .button-content button{
-    width: 90%;
-      margin: 50px 5%;
-      padding: 6px;
-      height: 40px;
-      color:white;
-      font-weight: bold;
-      background-color: #0156adcc;
-      border: none;
-      border-radius: 10px;
-      text-align: center;
-  }
   
-
-
   .button-click:hover{
     transition: all 0s ease;
     transform: translate(-2px,-2px);
@@ -110,9 +82,9 @@ main {
 
   h3{
     width: 100%;
-    color: #0156adcc;
+    color: #2e7ccacc;
     margin: 20px 0;
-    padding: 10px 0;
+
     font-size: 1.5rem;
     background-color: rgba(1, 86, 173, 0.1);
     font-weight: weight(-bold);
@@ -123,6 +95,10 @@ main {
     width: 100%;
     margin: 10px 0px;
     padding-top: 10px;
+  }
+
+  .content-container p {
+    text-align: none;
   }
 
   .content-container h5 a{
@@ -191,6 +167,34 @@ main {
       padding: 5px;
       color: $primary-color;
   }
+
+  .button-content p{
+    width: 90%;
+    margin: 50px 5%;
+    padding: 6px;
+    height: 40px;
+    color:white;
+    font-weight: bold;
+    background-color: #0156adcc;
+    border: none;
+    border-radius: 10px;
+    text-align: center;
+}
+
+ 
+  .button-content button{
+    width: 90%;
+      margin: 50px 5%;
+      padding: 6px;
+      height: 40px;
+      color:white;
+      font-weight: bold;
+      background-color: #0156adcc;
+      border: none;
+      border-radius: 10px;
+      text-align: center;
+  }
+  
 }
 
 .footer{

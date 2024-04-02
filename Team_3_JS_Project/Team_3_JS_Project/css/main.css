@@ -24,7 +24,6 @@ main {
   width: 100%;
   height: auto;
   background-color: white;
-  margin: 30px 0;
 }
 main .service-content p:hover {
   color: white;
@@ -41,34 +40,10 @@ main .service-content p a {
   text-decoration: none;
   color: white;
 }
-
-
-main .button-content p {
-  width: 90%;
-  margin: 50px 5%;
-  padding: 6px;
-  height: 40px;
-  color: rgb(255, 255, 255);
-  font-weight: bold;
-  background-color: rgba(1, 86, 173, 0.8);
-  border: none;
-  border-radius: 10px;
-  text-align: center;
-}
-
-main .button-content button {
-  width: 90%;
-  margin: 50px 5%;
-  padding: 6px;
-  height: 40px;
+main .button-content p a {
+  text-decoration: none;
   color: white;
-  font-weight: bold;
-  background-color: rgba(1, 86, 173, 0.8);
-  border: none;
-  border-radius: 10px;
-  text-align: center;
 }
-
 main .button-click:hover {
   transition: all 0s ease;
   transform: translate(-2px, -2px);
@@ -76,9 +51,8 @@ main .button-click:hover {
 }
 main h3 {
   width: 100%;
-  color: rgba(1, 86, 173, 0.8);
+  color: rgba(46, 124, 202, 0.8);
   margin: 20px 0;
-  padding: 10px 0;
   font-size: 1.5rem;
   background-color: rgba(1, 86, 173, 0.1);
 }
@@ -86,6 +60,9 @@ main .content-container {
   width: 100%;
   margin: 10px 0px;
   padding-top: 10px;
+}
+main .content-container p {
+  text-align: none;
 }
 main .content-container h5 a {
   text-decoration: none;
@@ -141,6 +118,30 @@ main h5 {
   margin: 20px;
   padding: 5px;
   color: rgba(1, 86, 173, 0.8);
+}
+main .button-content p {
+  width: 90%;
+  margin: 50px 5%;
+  padding: 6px;
+  height: 40px;
+  color: white;
+  font-weight: bold;
+  background-color: rgba(1, 86, 173, 0.8);
+  border: none;
+  border-radius: 10px;
+  text-align: center;
+}
+main .button-content button {
+  width: 90%;
+  margin: 50px 5%;
+  padding: 6px;
+  height: 40px;
+  color: white;
+  font-weight: bold;
+  background-color: rgba(1, 86, 173, 0.8);
+  border: none;
+  border-radius: 10px;
+  text-align: center;
 }
 
 .footer {
