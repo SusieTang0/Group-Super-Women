@@ -76,6 +76,7 @@ async function insertCustomer(userData){
   });
 }
 
+// Check whether the email exists in database
 async function checkCustomerEmail(email){
   fetch('/insertCustomer', {
     method: 'POST',

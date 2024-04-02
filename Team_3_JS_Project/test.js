@@ -29,6 +29,7 @@ function generateToken(customer) {
   const token = jwt.sign(payload, secret, { expiresIn });
   return token;
 }
+const token1 = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjdXN0b21lcklkIjo1LCJmaXJzdG5hbWUiOiJQaGlsaXBwZSIsImxhc3RuYW1lIjoiQm91Y2hhcmQiLCJlbWFpbCI6InBoaWxpcHBlLmJvdWNoYXJkQGV4YW1wbGUuY29tIiwicGhvbmUiOiI1MTQtNTU1LTM0NTYiLCJhdmF0YXIiOiJhdmF0YXI1LmpwZyIsImFkZHJlc3MiOiIxMTEgQXZlbnVlIGRlcyBQaW5zIiwiY2l0eSI6Ik1vbnRyZWFsIiwicHJvdmluY2UiOiJRdWViZWMiLCJjb3VudHJ5IjoiQ2FuYWRhIiwicG9zdGNvZGUiOiJIMlcgMVMzIiwiY29udGFjdE5hbWUiOiJFbGlzYWJldGggQm91Y2hhcmQiLCJjb250YWN0UGhvbiI6IjUxNC01NTUtODkwMSIsImFjY2VwdEVtYWlsTXNnIjpmYWxzZSwiaWF0IjoxNzEyMDQxNjA0LCJleHAiOjE3MTIwNjMyMDR9.gi44bdCv8qf_HyUSnkxrFQ2JgOv57MMCQPDgQEQLyfA";
 
 function verifyToken(token) {
   try {
@@ -43,6 +44,6 @@ function verifyToken(token) {
 
 const token = generateToken(createdApptData);
 
-console.log(salt);
+console.log(secret);
 console.log(hashPassword(123456, salt));
-console.log(verifyToken(token));
+console.log(verifyToken(token1));

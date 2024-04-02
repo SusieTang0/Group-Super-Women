@@ -1,11 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const client = require('../db');
-const jwt = require('jwt-simple');
+const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
 const customerRouter = express.Router();
 customerRouter.use(bodyParser.json());
 
-const crypto = require('crypto');
 const secret = Buffer.from('f351f2f7f429ab4456d7d6cd62aa6aee', 'hex');
 
 function hashPassword(password, salt) {
@@ -55,15 +55,16 @@ function verifyToken(token) {
   }
 }
 
-customerRouter.get('/getCustomerByJwt', authenticateJWT, async (req, res) => {
+customerRouter.get('/getCustomerByJwt', async (req, res) => {
   try {
     const token = req.headers.authorization;
+    const jwt = token.split(' ')[1];
 
     if (!token) {
       return res.status(401).json({ error: 'No token provided' });
     }
       // Verify JWT
-    const decoded = verifyToken(token);
+    const decoded = verifyToken(jwt);
     if (!decoded) {
       return res.status(401).json({ error: 'Invalid token' });
     }
@@ -75,8 +76,8 @@ customerRouter.get('/getCustomerByJwt', authenticateJWT, async (req, res) => {
 });
 
 customerRouter.post('/checkCustomerEmail', async (req, res) => {
-  
-  const email = req.body;
+
+  const email = req.body.email;
 
   try {
     const customer = await getUserByEmail(email);
