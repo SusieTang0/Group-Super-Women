@@ -31,16 +31,6 @@ nav{
 
 
 
-#footer{
-    width: 100%;
-    border-radius: 10px;
-    background: url('../assets/images/homepage-banner.png') no-repeat;
-    background-size: cover;
-}
-
-
-
-
 .navbar img{
     width: 220px;
     height: 12%;

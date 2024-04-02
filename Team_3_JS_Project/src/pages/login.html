@@ -24,10 +24,9 @@ File name: Smith's clinic html template
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
     <!-- custom style -->
-    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../styles/main.css">
     <link rel="stylesheet" href="../styles/layout.css">
-    <link rel="stylesheet" href="../styles/layout-special.css">
-     <link rel="stylesheet" href="../styles/sign_in.css">
+    <link rel="stylesheet" href="../styles/sign_in.css">
 
     <title>Smith's Clinic Home Page</title>
     <script src="../scripts/main.js"  defer></script>
@@ -37,47 +36,40 @@ File name: Smith's clinic html template
     <div id="container">
 
         <!-- bootstrap header / navigation bar -->
-        <div id="header" >
-            <div class="header">
-                <nav class="navbar navbar-expand-xl px-3 py-4">
-                   
-                    <a href="../index.html"><img src="../assets/images/clinic-logo-en.png" width="250" style="padding: 20px 30px 20px 0" alt="Clinic Logo" title="Home Page"></a>
-                    
+        <div id="header" >     
+          <div class="header">
+            <nav class="navbar navbar-expand-xl px-3 py-4">
+                <a href="../index.html"><img src="../assets/images/clinic-logo-en.png" width="250" style="padding-left: 20px" alt="Clinic Logo" title="Home Page"></a>
 
-                    <!-- Hamburger menu icon -->
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                      </button>
-                      
-            
-                    <!-- navbar links -->
-                    <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarSupportedContent">
-                        <ul class="navbar-nav">
-                        <li class="nav-item active">
-                            <a class="nav-link" aria-current="page" href="../index.html">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="services.html">Services</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="about-us.html">About us</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="contact.html">Contact</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" onclick="userCheck();">Appointment</a>
-                        </li>
-                        </ul>
-                    </div>
-                    
-                </nav>
-                <div class="header-dec">
-                    <h3>Log in</h3>
+                <!-- Hamburger menu icon -->
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+        
+                <!-- navbar links -->
+
+                <div class="collapse navbar-collapse justify-content-end" id="navbarNav" >
+                    <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" aria-current="page" href="../index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="services.html">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="about-us.html">About us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="contact.html">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" onclick="userCheck();">Appointment</a>
+                    </li>
+                    </ul>
                 </div>
-                <div class="header-dec-line"><p>Smith&apos;s Clinic</p></div>
-          
-            </div>
+            </nav>
+            
+          </div>
         </div>
         
         <!-- main -->

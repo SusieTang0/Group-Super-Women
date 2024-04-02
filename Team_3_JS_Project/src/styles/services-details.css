@@ -8,19 +8,19 @@
     width: 100%;
 }
 
-#total-content div {
+#content div {
     width: 100%;
     margin: 30px 0;
     width: 90%;
-   
 }
 
 #content div p{
     width: 100%;
-    color: #434343;   
+    color: #434343;
+    
 }
 
-#total-content div img{
+#content div img{
     width: 100%; 
 }
 
@@ -66,19 +66,27 @@
 
 .upside {
     margin: 20px 0;
+    
 }
 .upside p{
     margin: 20px;
+    text-align: left;
 }
 
 .downside-block{
     margin:80px 0;
 }
 
+.downside-block p{
+  text-align: left;
+}
+
+
 .text-layout{
     width: 80%;
     margin: 0 10%;
     padding: 50px 0;
+    text-align: left;
 }
 
 

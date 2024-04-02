@@ -41,21 +41,22 @@ main .service-content p a {
   text-decoration: none;
   color: white;
 }
-
-
+main .button-content p a {
+  text-decoration: none;
+  color: white;
+}
 main .button-content p {
   width: 90%;
   margin: 50px 5%;
   padding: 6px;
   height: 40px;
-  color: rgb(255, 255, 255);
+  color: white;
   font-weight: bold;
   background-color: rgba(1, 86, 173, 0.8);
   border: none;
   border-radius: 10px;
   text-align: center;
 }
-
 main .button-content button {
   width: 90%;
   margin: 50px 5%;
@@ -68,7 +69,6 @@ main .button-content button {
   border-radius: 10px;
   text-align: center;
 }
-
 main .button-click:hover {
   transition: all 0s ease;
   transform: translate(-2px, -2px);

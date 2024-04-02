@@ -2,10 +2,11 @@
 
 #registration-container{
     width: 100%;
-    margin-bottom: 50px;
+    margin:0 auto;
+    padding: 100px 0;
 }
 
-#registration-container, #reginfo{
+#reginfo{
     margin:0 auto;
 }
 
