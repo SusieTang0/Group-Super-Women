@@ -99,3 +99,20 @@ async function checkCustomerEmail(email){
     console.error('Error:', error);
   });
 }
+
+async function updateCustomer(customerId, updatedData) {
+  let url = '/updateCustomer/' + customerId;
+  fetch(url, {
+      method: 'PUT',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedData)
+  })
+  .then(response => {
+  if (!response.ok) {
+      throw new Error('Network response was not ok: ' + response.status);
+  }
+      console.log('Customer updated successfully');
+  });
+}

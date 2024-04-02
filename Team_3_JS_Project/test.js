@@ -17,6 +17,23 @@ let createdApptData = {
   paymentId: 6,   
 }
 
+let updateCustJson = {
+
+  "firstname": "Philippe",
+  "lastname": "Bouchard",
+  "email": "philippe.bouchard@example.com",
+  "phone": "1514-555-6543",
+  "avatar": "avatar1.jpg",
+  "city": "Montreal",
+  "province": "Quebec",
+  "country": "Canada",
+  "postcode": "H2W 1S3",
+  "contactName": "Elisabeth Bouchard",
+  "contactPhone": "514-555-8901",
+  "acceptEmailMsg": true
+
+}
+
 function generateToken(customer) {
   const payload = {
       apptDate: customer.apptDate,
@@ -48,18 +65,3 @@ console.log(secret);
 console.log(hashPassword(123456, salt));
 console.log(verifyToken(token1));
 
-
-{
-  "firstname": "Philippe",
-  "lastname": "Bouchard",
-  "email": "philippe.bouchard@example.com",
-  "phone": "1514-555-6543",
-  "avatar": "avatar1.jpg",
-  "city": "Montreal",
-  "province": "Quebec",
-  "country": "Canada",
-  "postcode": "H2W 1S3",
-  "contactName": "Elisabeth Bouchard",
-  "contactPhone": "514-555-8901",
-  "acceptEmailMsg": true
-}
