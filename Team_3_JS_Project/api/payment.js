@@ -5,15 +5,6 @@ const client = require('../db');
 const paymentRouter = express.Router();
 paymentRouter.use(bodyParser.json());
 
-paymentRouter.get('/insertPayment', async (req, res) => {
-  try {
-    // const users = await client.db().collection('appointment').find().toArray();
-    // res.json(appointment);
-  } catch (error) {
-    console.error('Error fetching appointment:', error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-});
 
 paymentRouter.post('/insertPayment', async (req, res) => {
   try {
@@ -25,27 +16,44 @@ paymentRouter.post('/insertPayment', async (req, res) => {
 
     const newId = maxIdDoc.paymentId + 1;
   
-    const {serviceName, servicePrice, apptDate, apptTime, createdTimeStamp, status, customerId, 
-      paymentId} = req.body;
+    const {cardType, cardNumber, ownerName, servicePrice, serviceFee, donation, totalAmount, needRefund,
+      createdTimeStamp} = req.body;
     
     await paymentCollection.insertOne({ 
-      appointmentId: newId,
-      serviceName: serviceName,
-      servicePrice:servicePrice,
-      apptDate: apptDate,
-      apptTime: apptTime,
-      createdTimeStamp: createdTimeStamp,
-      status: status,
-      customerId: customerId,
-      paymentId: paymentId
+      paymentId: newId,
+      cardType: cardType,
+      cardNumber: cardNumber, 
+      ownerName: ownerName, 
+      servicePrice: servicePrice, 
+      serviceFee: serviceFee,
+      donation: donation, 
+      totalAmount: totalAmount,
+      needRefund: needRefund,
+      createdTimeStamp: createdTimeStamp
      });
     
-    res.status(201).json({ message: 'Appointment created successfully' });
+    res.json(newId);
   } catch (error) {
     console.error('Error creating appointment:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 
+});
+
+paymentRouter.put('/updatePayment/:appointmentId', async (req, res) => {
+  try {
+    const paymentCollection = client.db('clinic').collection('payment');
+
+    let appointmentId = parseInt(req.params.appointmentId);
+    let updatedData = {
+      needRefund: req.body.needRefund,
+    }
+    await paymentCollection.findOneAndUpdate({appointmentId: appointmentId}, { $set: updatedData});
+    res.status(204).send({ message: 'Payment updated successfully' });
+  } catch (error) {
+    console.error('Error updating payment:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
 });
 
 module.exports = paymentRouter;
