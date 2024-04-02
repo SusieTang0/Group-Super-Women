@@ -1,7 +1,7 @@
 // getAppointments from the database filtering by customerId. Example, will get all appointments for customer with customerId, 1.
-function getAppointments(customerId) {
+export function getAppointments(customerId) {
     // eventually customerId will be taken from localStorage. Saved as 1 for now.
-    url = '/getAppointment?customerId=' + customerId;
+    let url = '/getAppointment?customerId=' + customerId;
     fetch(url, {
         method: 'GET'
     })
@@ -23,8 +23,8 @@ function getAppointments(customerId) {
 This gives a list of all appointments for one day for a specific service. Each of these appointments you can get the time
 using apptTime. */
 
-function getAppointmentTimes(apptDate, serviceName) {
-    url = '/getAppointmentTime?apptDate=' + apptDate + '&&serviceName=' + serviceName;
+export function getAppointmentTimes(apptDate, serviceName) {
+    let url = '/getAppointmentTime?apptDate=' + apptDate + '&&serviceName=' + serviceName;
     fetch(url, {
         method: 'GET'
     })
@@ -58,7 +58,7 @@ let createdApptData = {
   status: "Uncompleted"  // will always be this when creating a new appointment
 }
 
-async function createAppointment(createdApptData) {
+export function createAppointment(createdApptData) {
     // creates a new appointment object and saves it into the database.
     fetch('/insertAppointment', {
         method: 'POST',
@@ -86,8 +86,8 @@ async function createAppointment(createdApptData) {
 /* ************************************************************************************************************************** */
 /* delete an appointment given the appointmentId */
 
-function deleteAppointment(appointmentId) {
-    url = '/deleteAppointment?appointmentId=' + appointmentId;
+export function deleteAppointment(appointmentId) {
+    let url = '/deleteAppointment?appointmentId=' + appointmentId;
     fetch(url, {
         method: 'DELETE'
     })
@@ -116,8 +116,8 @@ let updatedData = {
   servicePrice: 500 // changed value to be taken when changing servicePrice on the html page. 
 }
 
-function updateAppointment(appointmentId, updatedData) {
-    url = '/updateAppointment/' + appointmentId;
+export function updateAppointment(appointmentId, updatedData) {
+    let url = '/updateAppointment/' + appointmentId;
     fetch(url, {
         method: 'PUT',
         headers: {
@@ -135,5 +135,4 @@ function updateAppointment(appointmentId, updatedData) {
 
 // updateAppointment(7, updatedData);
 
-module.exports = { getAppointments, getAppointmentTimes, createAppointment, deleteAppointment, updateAppointment };
   

@@ -4,7 +4,8 @@
 // Script Date: March 11, 2024
 
 'use strict';
-
+import { getAppointments } from "./fetchAppointment.js";
+getAppointments(1);
 // appointment = [orderNumber,service,appointmentDate,bookingDate,status,paymentID];
 var appointmentList;
 var feedbackList = new Array();
