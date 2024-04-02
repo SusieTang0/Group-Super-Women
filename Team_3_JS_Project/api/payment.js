@@ -10,29 +10,24 @@ paymentRouter.post('/insertPayment', async (req, res) => {
   try {
     const paymentCollection = client.db('clinic').collection('payment');
 
-    const count = await paymentCollection.countDocuments();
-
-    const maxIdDoc = await paymentCollection.findOne({}, { projection: { paymentId: { $slice: [count - 1, 1] } } });
-
-    const newId = maxIdDoc.paymentId + 1;
-  
-    const {cardType, cardNumber, ownerName, servicePrice, serviceFee, donation, totalAmount, needRefund,
-      createdTimeStamp} = req.body;
+    let lastDoc = await paymentCollection.find().sort({_id:-1}).limit(1).toArray();
+    const newId = parseInt(lastDoc[0].paymentId) + 1;
+    const payment = req.body;
     
     await paymentCollection.insertOne({ 
       paymentId: newId,
-      cardType: cardType,
-      cardNumber: cardNumber, 
-      ownerName: ownerName, 
-      servicePrice: servicePrice, 
-      serviceFee: serviceFee,
-      donation: donation, 
-      totalAmount: totalAmount,
-      needRefund: needRefund,
-      createdTimeStamp: createdTimeStamp
+      cardType: payment.cardType,
+      cardNumber: payment.cardNumber, 
+      ownerName: payment.ownerName, 
+      servicePrice: payment.servicePrice, 
+      serviceFee: payment.serviceFee,
+      donation: payment.donation, 
+      totalAmount: payment.totalAmount,
+      needRefund: payment.needRefund,
+      createdTimeStamp: payment.createdTimeStamp
      });
     
-    res.json(newId);
+     res.status(204).json({ paymentId: newId });
   } catch (error) {
     console.error('Error creating appointment:', error);
     res.status(500).json({ error: 'Internal server error' });
@@ -40,15 +35,24 @@ paymentRouter.post('/insertPayment', async (req, res) => {
 
 });
 
-paymentRouter.put('/updatePayment/:appointmentId', async (req, res) => {
+paymentRouter.put('/updatePayment/:paymentId', async (req, res) => {
   try {
     const paymentCollection = client.db('clinic').collection('payment');
-
-    let appointmentId = parseInt(req.params.appointmentId);
+    let paymentId = parseInt(req.params.paymentId);
+    const payment = req.body;
+    console.log(req.body.cardType);
     let updatedData = {
-      needRefund: req.body.needRefund,
+      cardType: payment.cardType,
+      cardNumber: payment.cardNumber, 
+      ownerName: payment.ownerName, 
+      servicePrice: payment.servicePrice, 
+      serviceFee: payment.serviceFee,
+      donation: payment.donation, 
+      totalAmount: payment.totalAmount,
+      needRefund: payment.needRefund,
+      createdTimeStamp: payment.createdTimeStamp
     }
-    await paymentCollection.findOneAndUpdate({appointmentId: appointmentId}, { $set: updatedData});
+    await paymentCollection.findOneAndUpdate({paymentId: paymentId}, { $set: updatedData});
     res.status(204).send({ message: 'Payment updated successfully' });
   } catch (error) {
     console.error('Error updating payment:', error);
