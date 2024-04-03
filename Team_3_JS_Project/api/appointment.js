@@ -1,7 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const client = require('../db');
-const { feedbackCompleted } = require('../src/scripts/fetchAppointment');
 const appointmentRouter = express.Router();
 appointmentRouter.use(bodyParser.json());
 

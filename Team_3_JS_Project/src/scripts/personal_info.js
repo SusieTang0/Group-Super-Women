@@ -104,10 +104,6 @@ function displayInfo(custom){
     
   }
   
-  if(window.localStorage.getItem('avatar') == null){
-    localStorage.setItem('avatar',custom[6]);
-  }
-  
   return;
 };
 
@@ -120,7 +116,7 @@ function findCustom(ID,list){
 }
 
 function showInfoInForm(custom){
-  let userID = window.localStorage.getItem('userID');
+  let userID = window.localStorage.getItem('userId');
  
   var ids = ['userID','firstname','lastname','emailAddress','phoneNumber','password','avatar','address','city','province','country','postcode','contactName','contactPhone','paymentID'];
 

@@ -27,7 +27,7 @@ export async function login(email, password) {
 }
 
 // Send request for customer information
-async function getCustomerInfo() {
+export async function getCustomerInfo() {
   try {
     // Get JWT from local storage
     const token = localStorage.getItem('jwt');
