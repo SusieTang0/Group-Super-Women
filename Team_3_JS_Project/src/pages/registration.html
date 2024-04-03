@@ -30,7 +30,7 @@ File name: registration.html
     <title>Smith's Clinic - Registration</title> <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../scripts/jquery.js" ></script>
     <script src="../scripts/main.js" defer></script>
-    <script src="../scripts/registration.js" defer></script>
+    <script src="../scripts/registration.js" defer type="module"></script>
    
 </head>
 <body>
@@ -76,8 +76,9 @@ File name: registration.html
           <div id="registration-container">
             <h3>Welcome to Smith&apos;s Clinic</h3>
             <p>Please enter your information to complete the registration</p>
+            <span id="msgBoxReg"></span>
             <div>
-                <form id="form" method="get" action="login.html" autocomplete="on" autocapitalize="words" onsubmit="return validateForm();">
+                <form id="form" autocomplete="on" autocapitalize="words">
                     <table id="reginfo" class="table-container">
                         <tr>
                             <td><label for="first-name">First Name<span><sup>*</sup></span></label></td>
@@ -115,7 +116,7 @@ File name: registration.html
                         </table>
                     </div>
                     <div id="subbutton" class="row">
-                        <div class="col-xl-6"><input type="submit" id="submit-registration" value="Submit"></div>
+                        <div class="col-xl-6"><input form="form" type="submit" id="submit-registration" value="Submit"></div>
                         <div class="col-xl-6"><input type="reset" id="clear-registration" value="Reset"></div>
                         
                     </div>

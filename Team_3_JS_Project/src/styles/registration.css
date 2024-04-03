@@ -104,3 +104,7 @@
   margin: 10px;
 }
 
+#msgBoxReg {
+    color: red;
+    margin: 10px 20px;
+  }

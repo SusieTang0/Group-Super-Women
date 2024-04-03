@@ -55,7 +55,7 @@ export async function getCustomerInfo() {
 }
 
 // Send request to create new customer
-async function insertCustomer(userData){
+export async function insertCustomer(userData){
   fetch('/insertCustomer', {
     method: 'POST',
     headers: {
@@ -79,27 +79,28 @@ async function insertCustomer(userData){
 }
 
 // Check whether the email exists in database
-async function checkCustomerEmail(email){
-  fetch('/insertCustomer', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(email)
-  })
-  .then(response => {
-    if (response.ok) {
-      return response.json();
-    } else {
+export async function checkCustomerEmail(email){
+  try {
+    const emailData = { email: email };
+    const response = await fetch('/checkCustomerEmail', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(emailData)
+    });
+    
+    if (!response.ok) {
       throw new Error('Failed to check customer email');
     }
-  })
-  .then(data => {
-    console.log(data); 
-  })
-  .catch(error => {
+
+    const data = await response.json();
+    console.log(data);
+    return data;
+  } catch (error) {
     console.error('Error:', error);
-  });
+    throw error;
+  }
 }
 
 async function updateCustomer(customerId, updatedData) {

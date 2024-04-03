@@ -5,54 +5,48 @@
 
 'use strict';
 
-let pwdform = document.getElementById('pwd');
-let pwdconfirm = document.getElementById('pwdconf');
-let emailelem = document.getElementById('email-address');
-let fnamelem = document.getElementById('first-name');
-let lnamelem = document.getElementById('last-name');
+import { checkCustomerEmail, insertCustomer } from "./fetchCustomer.js";
 
-let secueKey = new Map([
-  ["john_smith@123.com","123456"],
-  ["mary_wood@123.com","456789"],
-  ["lucy_allen@123.com","000000"]
-]
-);
-
-var customs= [['C00001','John','Smith','john_smith@123.com','514-233-2333','123456','../assets/upload/avater-sample.png',,,,,,],['C0002','Mary','Wood','mary_wood@123.com','514-255-2555','456789','../assets/upload/clinic-64.png',,,,,,],['C00003','Lucy','Allen','lucy_allen@123.com','514-299-2999','000000','../assets/upload/instagram-white.png',,,,,,]];
+const pwdform = document.getElementById('pwd');
+const pwdconfirm = document.getElementById('pwdconf');
+const emailElem = document.getElementById('email-address');
+const fnamElem = document.getElementById('first-name');
+const lnamElem = document.getElementById('last-name');
+const msgBoxReg = document.getElementById('msgBoxReg');
+const phoneElem = document.getElementById('phone');
+const acceptEmailElem = document.getElementById('agree');
 
 
-function validateForm(){
+document.getElementById("form").addEventListener("submit", async function (event) {
+  event.preventDefault();
 
-    let regemail = emailelem.value;
-    
-    if(secueKey.has(regemail)){
-        alert('User ' + regemail + ' already registered, please use another email.');
-        return false;
-    } else {
-      if(pwdform.value == pwdconfirm.value){
-         
-          setCustomId();
-          localStorage.setItem('emailAddress', emailelem.value);
-          localStorage.setItem('password', pwdconfirm.value);
-          localStorage.setItem('firstname', fnamelem.value);
-          localStorage.setItem('lastname', lnamelem.value);
-          localStorage.setItem('register', true);
-          return true;
-      } else
-      {
-          alert('Passwords do not match! please try again.')
-          return false;
-      }
+  let regemail = emailElem.value;
+  let checkResult = await checkCustomerEmail(regemail);
+  
+  let firstname = fnamElem.value;
+  let lastname = lnamElem.value;
+  let phone = phoneElem.value;
+  let acceptEmailMsg = acceptEmailElem.checked ? true : false;
+  let password = pwdform.value;
+  let confirmPassword = pwdconfirm.value;
+  
+
+  try {
+    if (checkResult) throw regemail + ' already registered, please use another email';
+    if (confirmPassword !== password ) throw "Passwords must be same";
+
+    const newUserData = {
+      firstname: firstname,
+      lastname: lastname,
+      email: regemail,
+      phone: phone,
+      acceptEmailMsg: acceptEmailMsg
     }
-}
 
-function setCustomId(){
-    let custID = 'C';
-    let counter = 9999-customs.length;
-    while(counter>1){
-      custID+='0';
-      counter/=10;
-    }
-    custID+=customs.length +1;
-    localStorage.setItem('userID',custID);
-}
+    await insertCustomer(newUserData);
+    alert("Registration successful! Please log in.");
+    window.location.href = 'login.html';
+  } catch (error) {
+    msgBoxReg.innerHTML = error;
+  }
+});
