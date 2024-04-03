@@ -95,3 +95,8 @@ h2{
 .upside .booking-button button{
     color: white;
 }
+
+.form-control{
+  margin: 20px 0;
+}
+

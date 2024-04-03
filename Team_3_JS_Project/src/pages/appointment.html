@@ -103,7 +103,7 @@ File name: Smith's clinic html template
             </div>
           </div>
           <div id="appointmentdetails" class="mt-5">
-            <form id="appointment-form" method="post" action="payment.html" autocapitalize="words" onsubmit="return savelocalinfo();">
+            <form id="appointment-form" action="payment.html" autocapitalize="words" onsubmit="return savelocalinfo();">
                 <table class="w-100">
                 <tr class="row">
                 <td id="calendertime" class="col-xl-8 pb-3">
@@ -144,17 +144,8 @@ File name: Smith's clinic html template
                             </div>
                             <div id="choosetime" class="col-xl-6 pt-4 w-90 text-center">
                                 <p id="date-content" class="ms-5">Please choose a date first.</p>
-                                <ul class="timetable">
-                                <li>8:00 am</li>
-                                <li>9:00 am</li>
-                                <li>10:00 am</li>
-                                <li>11:00 am</li>
-                                <li>12:00 pm</li>
-                                <li>1:00 pm</li>
-                                <li>2:00 pm</li>
-                                <li>3:00 pm</li>
-                                <li>4:00 pm</li>
-                                <li>5:00 pm</li>
+                                <ul id="timeTable" class="timetable">
+                                
     <!--                           <li>3:00 pm</li>
                                 <li>3:30 pm</li> --> 
                                 </ul>
@@ -168,12 +159,13 @@ File name: Smith's clinic html template
                             <hr class="border border-primary border-1.5 opacity-50">
                         </summary>
                         <div id="serdet" class="ps-4">
-                            <p>Order Number: #</p>
+                            <p>&nbsp; </p>
                             <p>Choose a service.</p>
                             <p>Choose date.</p>
                             <p>Choose time.</p>
                             <p>1 hr</p>
                             <p>$0</p>
+                            <p>&nbsp; </p>
                         </div>
                     </details >
                     

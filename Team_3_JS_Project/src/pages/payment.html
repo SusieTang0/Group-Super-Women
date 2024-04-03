@@ -96,34 +96,33 @@ File name: Smith's clinic html template
                         <div class="payment-title">
                             <h3>Payment Form</h3>
                         </div>
-                        <form id="paymentForm" onreset="location.reload();" onchange="return validatePaymentForm();">
+                        <form id="paymentForm" onreset="location.reload();">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="cardtype" id="visa">
+                                <input class="form-check-input" type="radio" name="cardType" id="visa">
                                 <label class="form-check-label mb-2" for="visa">Visa</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="cardtype" id="master" checked>
+                                <input class="form-check-input" type="radio" name="cardType" id="master" >
                                 <label class="form-check-label" for="master">MasterCard</label>
                             </div>
                             <div class="form-floating mb-3 col-md-8">
                                 <input type="text" class="form-control" id="nameOnCard" placeholder="Name on the card">
                                 <label for="nameOnCard">Name on the card</label>
-                                <span id="nameOnCardError" class="error-message">Please enter the name on the card</span>
+                               
                             </div>
                             <div class="form-floating mb-3 col-md-8">
                                 <input type="text" class="form-control" id="cardNumber" placeholder="Credit Card Number">
                                 <label for="cardNumber">Credit Card Number</label>
-                                <span id="cardNumberError" class="error-message">Please enter a valid 16-digit credit card number</span>
+                               
                             </div>
                             <div class="form-floating col-md-3">
                                 <input type="text" class="form-control" id="cvvNumber" placeholder="CVV Number">
                                 <label for="cvvNumber">CVV Number</label>
-                                <span id="cvvNumberError" class="error-message">Please enter a valid 3-digit CVV number</span>
+                               
                             </div>
                             <div class="form-floating col-md-3">
-                              <input type="text" class="form-control" id="cvvNumber" placeholder="CVV Number">
+                              <input type="date" class="form-control" id="experiedDate" placeholder="CVV Number" required="required">
                               <label for="experiedDateError">Experied Date</label>
-                              <span id="experiedDateError" class="error-message">Please choose a date</span>
                           </div>
                         </form>
                     </div>
@@ -161,7 +160,7 @@ File name: Smith's clinic html template
                                 </div>
                             </div>
                             <div class="booking-button">
-                                <button id= "bookingNow" class="btn btn-primary btn-submit mb-3"><a href="book-completed.html" onclick="submitPayment();">Booking Now</a></button>
+                                <button id= "bookingNow" class="btn btn-primary btn-submit mb-3" onclick="submitPayment();">Booking Now</button>
                             </div>
                         </div>
                     </div> 
