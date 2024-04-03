@@ -44,7 +44,7 @@ appointmentRouter.post('/insertAppointment', async (req, res) => {
       apptDate: appt.apptDate,
       apptTime: appt.apptTime,
       createdTimeStamp: new Date().toISOString(),
-      status: appt.status,
+      status: "uncompleted",
       customerId: appt.customerId,
       paymentId: appt.paymentId,
       feedbackCompleted: false
