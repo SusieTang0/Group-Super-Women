@@ -33,7 +33,7 @@ File name: personal-info.html
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     
 
-    <script src="../scripts/personal_info.js"></script>
+    <script src="../scripts/personal_info.js" defer type="module"></script>
 </head>
 <body>
   <div id="container">
@@ -103,7 +103,7 @@ File name: personal-info.html
               <h6 class="p-2">Phone Number: &nbsp;<span id="result-phoneNumber">&nbsp;</span></h6>
               <h6 class="p-2">Address: &nbsp;<span id="result-address">&nbsp;</span></h6>
               <h6 class="p-2">City: &nbsp;<span id="result-city">&nbsp;</span></h6>
-              <h6 class="p-2">Last Name: &nbsp;<span id="result-province">&nbsp;</span></h6>
+              <h6 class="p-2">Province: &nbsp;<span id="result-province">&nbsp;</span></h6>
               <h6 class="p-2">Country: &nbsp;<span id="result-country">&nbsp;</span></h6>
               <h6 class="p-2">Postcode: &nbsp;<span id="result-postcode">&nbsp;</span></h6>
               <hr class="w-100" style="border: 1px solid #1056adcc;">
@@ -121,7 +121,7 @@ File name: personal-info.html
             <hr class="w-100" style="border: 2px solid #1056adcc;">  
             <div id="subbutton" class="row button-content">
               <div class="col-md-3">&nbsp;</div>
-              <div class="col-md-6" ><p><a href="personal-info-edit.html" onclick="showInfoInForm();">Edit Personal Information</a></p></div> 
+              <div class="col-md-6" ><button id="edit-customer">Edit Personal Information</button></div> 
               <div class="col-md-3">&nbsp;</div> 
             </div>
           

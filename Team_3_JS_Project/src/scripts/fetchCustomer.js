@@ -45,7 +45,7 @@ export async function getCustomerInfo() {
     })
     if (response.ok) {
       const data = await response.json();
-      console.log(data); 
+      return data;
     } else {
       throw new Error('Failed to fetch customer data');
     }
@@ -103,19 +103,31 @@ export async function checkCustomerEmail(email){
   }
 }
 
-async function updateCustomer(customerId, updatedData) {
+export async function updateCustomer(customerId, updatedData) {
   let url = '/updateCustomer/' + customerId;
-  fetch(url, {
+  try {
+    const response = await fetch(url, {
       method: 'PUT',
       headers: {
-          'Content-Type': 'application/json',
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(updatedData)
-  })
-  .then(response => {
-  if (!response.ok) {
+    });
+
+    if (!response.ok) {
       throw new Error('Network response was not ok: ' + response.status);
+    }
+
+    console.log('Customer updated successfully');
+
+    // Get new JWT token
+    const responseData = await response.json();
+    const { token } = responseData;
+
+    // Save new JWT into local storage
+    localStorage.setItem('jwt', token);
+  } catch (error) {
+    console.error('Error updating customer:', error);
+    throw error;
   }
-      console.log('Customer updated successfully');
-  });
 }

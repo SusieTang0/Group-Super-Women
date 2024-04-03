@@ -31,7 +31,7 @@ File name: personal-info-edit.html
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="../scripts/main.js"></script>
-    <script src="../scripts/personal_info.js" defer></script>
+    <script src="../scripts/personal_info_edit.js" defer type="module"></script>
     
     
 </head>
@@ -94,7 +94,7 @@ File name: personal-info-edit.html
                 <h4 class="ps-2 pt-4">Edit Personal Information</h4>
                 <hr class="w-100" style="border: 2px solid #1056adcc;">
                 <div>
-                    <form id="form" method="get" action="personal-info.html" autocomplete="on" autocapitalize="words">
+                    <form id="edit-form" autocomplete="on" autocapitalize="words">
                         <div id="infoForm" class="row">
                             <div class="col-md-7 p-2">
                                 <div class="row p-2">
@@ -184,9 +184,9 @@ File name: personal-info-edit.html
                                 <label class="col-sm-11" for="agree">&nbsp;&nbsp;I accept Smith&apos;s Clinic send messages to me by Email.</label>  
                             </div>
                             <div id="subbutton" class="row">
-                                <div class="col-md-4"><input type="submit" id="submitRegistration" value="Submit" onclick="infoSubmit();"></div>
+                                <div class="col-md-4"><input type="submit" id="submitRegistration" value="Submit"></div>
                                 <div class="col-md-4"><input type="reset" id="resetRegistration" value="Reset" ></div> 
-                                <div class="col-md-4"><input type="button" id="cancelRegistration" value="Cancel" onclick="infoCancel();"></div> 
+                                <div class="col-md-4"><input type="button" id="cancelRegistration" value="Cancel"></div> 
                             </div>
                         </div>
                     </form>

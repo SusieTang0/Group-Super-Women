@@ -59,7 +59,6 @@ customerRouter.get('/getCustomerByJwt', async (req, res) => {
   try {
     const token = req.headers.authorization;
     const jwt = token.split(' ')[1];
-
     if (!token) {
       return res.status(401).json({ error: 'No token provided' });
     }
@@ -170,7 +169,13 @@ customerRouter.put('/updateCustomer/:customerId', async (req, res) => {
       acceptEmailMsg: req.body.acceptEmailMsg
     }
     await customerCollection.findOneAndUpdate({customerId: customerId}, { $set: updatedData});
-    res.status(204).json({ message: 'Customer updated successfully' });
+
+    // Generate new JWT token
+    const customer = await customerCollection.findOne({ customerId: customerId });
+    const newToken = generateToken(customer);
+
+    // Send new JWT token back to client side
+    res.status(200).json({ message: 'Customer updated successfully', token: newToken });
   } catch (error) {
     console.error('Error updating customer:', error);
     res.status(500).json({ error: 'Internal server error' });
