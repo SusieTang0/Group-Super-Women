@@ -6,6 +6,7 @@ const contact = require('./api/contact');
 const feedback = require('./api/feedback');
 const path = require('path');
 const client = require('./db');
+const logger = require('./logger');
 
 const port = process.env.PORT || 3000;
 
