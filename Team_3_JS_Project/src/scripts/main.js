@@ -33,10 +33,10 @@ let xhr = new XMLHttpRequest();
 var customsInfo;
 
 function loginCheck(){
-  let userID = window.localStorage.getItem('userID');
+  let userID = window.localStorage.getItem('userId');
   if(userID != null){
     let first_name = window.localStorage.getItem('firstname');
-    let avatar_url = window.localStorage.getItem('avatar');
+    let avatar_url = '../assets/upload/avater-sample.png';
     
     if(document.getElementById('loginBefore') != undefined){
       document.getElementById('loginBefore').innerHTML=
@@ -53,7 +53,7 @@ function loginCheck(){
 }
 
 function userCheck(){
-  let userID = window.localStorage.getItem('userID');
+  let userID = window.localStorage.getItem('userId');
   if(userID == null){
     alert(`Please login first.`);
     window.location.href = 'login.html';

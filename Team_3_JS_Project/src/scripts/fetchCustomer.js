@@ -1,6 +1,6 @@
 
 // Login function
-async function login(email, password) {
+export async function login(email, password) {
   try {
     // Send login reques
     const response = await fetch('/login', {
@@ -15,6 +15,8 @@ async function login(email, password) {
     // If login successful, store JWT in local storage
     if (response.ok) {
       localStorage.setItem('jwt', data.token);
+      localStorage.setItem('userId', data.userId);
+      localStorage.setItem('firstname', data.firstname);
       console.log('Login successful');
     } else {
       console.error('Login failed:', data.message);

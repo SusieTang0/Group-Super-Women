@@ -143,7 +143,7 @@ customerRouter.post('/login', async (req, res) => {
     }
     
     const token = generateToken(customer);
-    res.json({ token });
+    res.json({ token: token, userId: customer.customerId, firstname: customer.firstname });
   } catch (error) {
       console.error('Error logging in:', error);
       res.status(500).json({ error: 'Internal server error' });
