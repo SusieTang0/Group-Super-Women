@@ -63,18 +63,9 @@ function userCheck(){
 
 }
 
-function logOut(){
-  const first_name = window.localStorage.getItem('firstname');
-  const last_name = window.localStorage.getItem('lastname');
-  let result;
-  result = window.confirm('Dear ' + first_name + ' ' + last_name+'. Log out this website?')
-  if(result){
-      localStorage.clear();
-      startUp;
-  }else{
-      startUp;
-  }
-    
+function logOut() {
+  localStorage.clear();
+  window.location.href = '../index.html'; 
 }
 
 function toAppointDis(){

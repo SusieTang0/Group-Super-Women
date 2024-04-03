@@ -165,7 +165,7 @@ function makeCalender(theMonth,theYear){
     }
 
     for (let dj = 1; dj <= dayofMonth; dj++){
-      if (( theMonth == thisMonth ) && (dj < thisDate) && (theYear == thisYear) ){
+      if (( theMonth == thisMonth ) && (dj < thisDate + 1) && (theYear == thisYear) ){
           calul.innerHTML += "<li><span class=\"inactive\">" + dj + "</span></li>";
       } else {
 

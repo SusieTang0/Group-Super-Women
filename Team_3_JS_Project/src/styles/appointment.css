@@ -130,6 +130,11 @@ cursor: pointer;
     border:2px solid #a0cadd;
 }
 
+.timetable li .inactive{
+  color:rgba(194,196,209,0.8);
+}
+
+
 
 #select{
     font-size:110%;

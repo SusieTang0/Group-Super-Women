@@ -5,7 +5,6 @@
 
 'use strict';
 import { getAppointments, getAppointmentTimes, createAppointment, deleteAppointment, updateAppointment } from "./fetchAppointment.js";
-let list = await getAppointments(1);
 
 let response = await getAppointmentTimes("2024-04-10", "Blood Test");
 
@@ -31,34 +30,23 @@ window.addEventListener('load',startUp);
 window.addEventListener('load',setLeftSideBar);
 
 async function startUp(){
-  appointmentList = await getAppointments(1);
-  // [['AEX123','Blood Test', '2024-03-24 11:00 am', '2024-02-19 07:53 pm','uncompleted',],
-  // ['CE6RS4','Family Doctor', '2024-03-21 05:00 pm', '2024-03-09 07:53 am','uncompleted'],
-  // ['0E3RV4','Urgent Care', '2024-01-24 11:00 am', '2024-01-19 07:53 pm','completed',],
-  // ['0G3UT5','Family Doctor', '2024-02-21 05:00 pm', '2024-02-09 07:53 am','completed',]];
+  try {
+    appointmentList = await getAppointments(1);
 
-  //const params = (new URL(document.location)).searchParams;
+    let status = window.localStorage.getItem('status');
+    if(status === null || status === undefined) {
+      status = 'total'; 
+      window.localStorage.setItem('status', status); 
+    }
+    let serviceID = window.localStorage.getItem('serviceID');
+    if(serviceID != undefined){
+      rescheduleChange();
+    }
 
-  let status = window.localStorage.getItem('status');
-  let serviceID = window.localStorage.getItem('serviceID');
-  if(serviceID != undefined){
-    rescheduleChange();
-  }
+    displayAppointments(status,appointmentList);
 
-  displayAppointments(status,appointmentList);
-
-  if(localStorage.getItem('feedbackIndex') != undefined){
-    let id = 'btn-feedback' + localStorage.getItem('feedbackIndex')
-    $(`#${id}`).css({
-      'background-color': 'lightgray'
-    });
-
-    document.getElementById(id).onclick= ()=>{
-      let theId = "details"+localStorage.getItem('feedbackIndex');
-      
-      document.getElementById(theId).innerHTML='You already completed the feedack form.Thank you~!';
-    };
-    
+  } catch (error) {
+    console.error('Error starting up:', error);
   }
 }
 
@@ -91,57 +79,94 @@ function displayAppointments(theStatus, appointmentList) {
   let appointments = ""; 
   let titleName = "";
   let optionTitle = "<td>Options</td>";
-  if(theStatus == "uncompleted"){
-    titleName = "Uncompleted Appointments"
-  }else if(theStatus == "completed"){
-    titleName = "Completed Appointments"
-  }else if(theStatus == "total"){
+  if (theStatus == "uncompleted") {
+    titleName = "Uncompleted Appointments";
+  } else if (theStatus == "completed") {
+    titleName = "Completed Appointments";
+  } else if (theStatus == "total") {
     titleName = "Appointments";
-  }else{
-    titleName = "Appointment"+ theStatus;
+  } else {
+    titleName = "Appointment" + theStatus;
     optionTitle = "";
   }
 
-  document.getElementById('appointTitle').innerHTML= titleName;
+  document.getElementById('appointTitle').innerHTML = titleName;
 
   appointments += 
-  `<table >
-    <tr class="listDisplay-tr"><td>Appt #</td><td>Service</td><td>Appointment<br>Date&nbsp;&&nbsp;Time</td><td>Booking<br>Date&nbsp;&&nbsp;Time</td><td>Status</td>${optionTitle}</tr>`;
+    `<table >
+      <tr class="listDisplay-tr">
+        <td>Appt #</td>
+        <td>Service</td>
+        <td>Appointment<br>Date&nbsp;&&nbsp;Time</td>
+        <td>Booking<br>Date&nbsp;&&nbsp;Time</td>
+        <td>Status</td>${optionTitle}
+      </tr>`;
 
+  for (let i = 0; i < appointmentList.length; i++) {
+    if (appointmentList[i].status == theStatus || theStatus == 'total' || theStatus == 'Feedback') {
+      appointments += 
+        `<tr class="listDisplay-tr">
+          <td>${appointmentList[i].appointmentId}</td>
+          <td>${appointmentList[i].serviceName}</td>
+          <td>${appointmentList[i].apptDate} ${ appointmentList[i].apptTime }</td>
+          <td>${appointmentList[i].createdTimeStamp}</td>
+          <td>${appointmentList[i].status}</td>`;
 
-  for(let i = 0; i < appointmentList.length; i++){
-    if(appointmentList[i].status == theStatus || theStatus == 'total' || theStatus == 'Feedback'){
-      appointments += `<tr class="listDisplay-tr"><td>${appointmentList[i].appointmentId}</td><td>${appointmentList[i].serviceName}</td><td>${appointmentList[i].apptDate} ${ appointmentList[i].apptTime }</td><td>${appointmentList[i].createdTimeStamp
-      }</td><td>${appointmentList[i].status}</td>`
-      if(appointmentList[i].status == 'uncompleted'){
-        appointments += `<td><button class="btn-reschedule" name="reschedule-button" onclick="reschedule('${i}');">reschedule</button>
-        <button class="btn-cancel" name="cancel-button" onclick="cancel('${i}');">cancel</button></td></tr>`;
-      }else if(appointmentList[i].status == 'completed'){
-        if(appointmentList[i].feedbackComplete == false) {
-          appointments += `<td><button id="btn-feedback${i}" class="btn-feedback" name="feedback-button">feedback</button></td></tr>`;
+      if (appointmentList[i].status == 'uncompleted') {
+        appointments += 
+          `<td>
+            <button class="btn-reschedule" name="reschedule-button" data-index="${i}">reschedule</button>
+            <button class="btn-cancel" name="cancel-button" data-index="${i}">cancel</button>
+          </td></tr>`;
+      } else if (appointmentList[i].status == 'completed' && theStatus != 'Feedback') {
+        if (appointmentList[i].feedbackCompleted === false) {
+          appointments += `<td><button id="btn-feedback${i}" class="btn-feedback" name="feedback-button" data-index="${i}">feedback</button></td></tr>`;
         } else {
-          appointments += `<td><button id="btn-feedback${i}" class="btn-feedback" disabled name="feedback-button">feedback</button></td></tr>`;
+          appointments += `<td><button id="btn-feedback${i}" class="btn-feedback" name="feedback-button" data-index="${i}" disabled style="background-color: lightgrey;">feedback</button></td></tr>`;
         }
       }
-      if(theStatus == 'Feedback'){
+
+      if (theStatus == 'Feedback') {
         appointments += `<tr><td colspan="6">`;
         return displayFeedback(appointments);
-        
       }
-      appointments += `<tr><td colspan="6"><div id="details${i}"></div></td></tr>`
+
+      appointments += `<tr><td colspan="6"><div id="details${i}"></div></td></tr>`;
     }
-    
   }
-  
-    /*array = completedList;
-    document.getElementById('title').innerHTML = `<h4 id="title" class="ps-2 pt-4">Uncompleted Appointments</h4>`;
-    extra_info = `<a id="link-reschedule" src="appoint">feedback</a><a id="btn-feedback" >feedback</a>`*/
+
   appointments += `</table><hr>`; 
-  document.getElementById('listDisplay').innerHTML= appointments;
+  document.getElementById('listDisplay').innerHTML = appointments;
+
+  appointments += `</table><hr>`; 
+  document.getElementById('listDisplay').innerHTML = appointments;
+
+  const rescheduleButtons = document.querySelectorAll('.btn-reschedule');
+  rescheduleButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const index = button.dataset.index;
+      reschedule(index);
+    });
+  });
+
+  const cancelButtons = document.querySelectorAll('.btn-cancel');
+  cancelButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const index = button.dataset.index;
+      cancel(index);
+    });
+  });
+
+  const feedbackButtons = document.querySelectorAll('.btn-feedback');
+  feedbackButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const index = button.dataset.index;
+      feedback(index);
+    });
+  });
 }
 
 function feedback(index){
-  alert('hello')
   let orderID = appointmentList[index].appointmentId;
   localStorage.setItem('orderID',orderID);
   let theId = "details"+index;
@@ -219,18 +244,11 @@ function displayFeedback(theMsg){
   });
 
 }
-// Loop through each feedback button and attach event listener
-let feedbackBtns = document.querySelectorAll('.btn-feedback');
-for (let i = 0; i < feedbackBtns.length; i++) {
-    feedbackBtns[i].addEventListener('click', function() {
-        feedback(i);
-    });
-}
 
 
 function feedbackSub(){
-  let checkboxAns = document.getElementsByTagName('checkbox');
-  let radioAns = document.getElementsByTagName('radio');
+  let checkboxAns = document.querySelectorAll('input[type="checkbox"]:checked');
+  let radioAns = document.querySelectorAll('input[type="radio"]:checked');
   localStorage.setItem('feedback',false);
   localStorage.removeItem('orderID');
 }
