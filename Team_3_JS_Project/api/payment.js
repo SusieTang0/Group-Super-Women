@@ -45,6 +45,8 @@ paymentRouter.put('/updatePayment/:paymentId', async (req, res) => {
       cardType: payment.cardType,
       cardNumber: payment.cardNumber, 
       ownerName: payment.ownerName, 
+      cardCVV: payment.cardCVV, 
+      cardExpDate: payment.cardExpDate, 
       servicePrice: payment.servicePrice, 
       serviceFee: payment.serviceFee,
       donation: payment.donation, 
