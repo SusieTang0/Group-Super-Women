@@ -42,7 +42,7 @@ File name: contact.html
 
     <title>Smith's Clinic - Contact</title>
     <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB5sO8A7FlO1tfSInbiLXpycKhyt5WsPBc&callback=console.debug&libraries=maps,marker&v=beta"></script>
-    <script src="../scripts/contact.js" ></script>
+    <script src="../scripts/contact.js" defer></script>
     <script src="../scripts/messagecount.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../scripts/main.js" defer></script>
@@ -118,7 +118,7 @@ File name: contact.html
          
                     </div>
                     <div class="contact-form">
-                        <form id="contactForm" action="submit.html" method="post" onreset="location.reload()"onchange="return validateFormOnChange()">
+                        <form id="contactForm"  method="post" >
                             <div class="row">
                                 <div class="col-sm-6 mb-3">
                                     <label for="firstName">First Name</label>
