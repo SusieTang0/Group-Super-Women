@@ -16,8 +16,7 @@ window.addEventListener('load',setLeftSideBar);
 
 async function startUp(){
   try {
-    appointmentList = await getAppointments(1);     // changes according to the user's id in local storage
-
+    appointmentList = await getAppointments(window.localStorage.getItem('userId'));
     let status = window.localStorage.getItem('status');
     if(status === null || status === undefined) {
       status = 'total'; 

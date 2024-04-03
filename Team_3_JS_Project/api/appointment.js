@@ -23,7 +23,6 @@ appointmentRouter.get('/getAppointmentTime', async (req, res) => {
     const filter = { apptDate: req.query.apptDate, serviceName: req.query.serviceName };
     
     const appointments = await appointmentCollection.find(filter).toArray();
-    
     res.json(appointments);
   } catch (error) {
     console.error('Error fetching appointment:', error);
