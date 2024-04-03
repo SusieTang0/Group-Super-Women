@@ -39,6 +39,7 @@ document.getElementById("form").addEventListener("submit", async function (event
       firstname: firstname,
       lastname: lastname,
       email: regemail,
+      password: password,
       phone: phone,
       acceptEmailMsg: acceptEmailMsg
     }

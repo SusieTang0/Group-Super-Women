@@ -7,7 +7,7 @@ function hashPassword(password, salt) {
 }
 
 
-const salt = crypto.randomBytes(16).toString('hex');
+const salt = "bd4fe161b858d824d73e58269b10542e";
 const secret = Buffer.from('f351f2f7f429ab4456d7d6cd62aa6aee', 'hex');
 
 let createdApptData = {
@@ -61,7 +61,7 @@ function verifyToken(token) {
 
 const token = generateToken(createdApptData);
 
-console.log(secret);
+// console.log(secret);
 console.log(hashPassword(123456, salt));
-console.log(verifyToken(token1));
+// console.log(verifyToken(token1));
 

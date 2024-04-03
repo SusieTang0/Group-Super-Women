@@ -11,13 +11,12 @@ function loginSubmit(){
   let pwd = document.getElementById('pwd').value;
   
   login(user, pwd);
-
-  window.alert("Welcome to Smith's Clinic!");
-  window.location.href = '../index.html';
-
 }
 
 document.getElementById("sign_in").addEventListener("submit", function(event) {
   event.preventDefault(); 
   loginSubmit();
+
+  window.alert("Welcome to Smith's Clinic!");
+  window.location.href = '../index.html';
 });
