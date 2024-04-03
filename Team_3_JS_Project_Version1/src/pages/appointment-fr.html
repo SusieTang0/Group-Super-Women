@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<!--
+name: Shuting Tang
+Current Date: February 16, 2024
+File name: Smith's clinic html template
+-->
+<html lang="en">
+<head>
+    <!-- required meta tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="This is appointment page of Smith's Clinic website">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon"  href="../assets/icons/clinic-64.png">
+    <link rel="icon" type="image/png" href="../assets/icons/clinic-32.png">
+    <link rel="icon" type="image/png"  href="../assets/icons/clinic-96.png">
+    <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../assets/icons/clinic-180.png">
+    <link rel="icon" type="image/png" href="../assets/icons/clinic-192.png">
+    <link rel="icon" sizes="192x192" href="../assets/icons/clinic-192.png">
+
+    <!-- bootstrap css -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    <!-- custom style -->
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/appointment.css">
+    <link rel="stylesheet" href="../styles/layout.css">
+
+    <title>Clinique Smith - Rendez-vous</title>
+</head>
+<body>
+   
+    <div id="container">
+       
+        <!-- bootstrap header / navigation bar -->
+        
+        <div id="header">
+            
+            <nav class="navbar navbar-expand-xl px-3 py-4">
+        
+                <a href="index-en.html"><img src="../assets/images/clinic-logo-fr.png" width="250" style="padding: 20px 30px 20px 0" alt="Clinic Logo" title="Home Page"></a>
+
+                <!-- Hamburger menu icon -->
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+        
+                <!-- navbar links -->
+                <div class="collapse navbar-collapse justify-content-end" id="navbarNav" >
+                    <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" aria-current="page" href="index-fr.html">Accueil</a>
+                    </li>
+                     <li class="nav-item active">
+                        <a class="nav-link" aria-current="page" href="services-fr.html">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="about-us-fr.html">À propos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="contact-fr.html">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="appointment-fr.html">Rendez-vous</a>
+                    </li>
+                    <li>
+                        <a class="nav-link" aria-current="page" href="appointment-en.html"  style="width: 100px;">
+                            <img src="../assets/icons/global-24-white.png" alt="language" style="width: 20px;">EN</a>
+                        </li>
+                        <li class="nav-item" >
+                            <a class="nav-link" href="login-fr.html" style="width: 130px;"><img id="login-image" src="../assets/icons/person-grey-40.png" style="width: 30px;" alt="Log in Here " title="Connexion">  
+                            Connexion</a>
+                        </li>
+                    </ul>
+                </div>
+
+            </nav>
+        </div>
+        
+        <!-- main -->
+        <main>
+            
+            <div id="main-container">
+            <div id="appointmentcontainer">
+                <div id="appointmenthead" >
+                    <h2 class="py-3">Rendez-vous en Ligne</h2>
+                    <p>Consultez nos disponibilités et réservez la date et l'heure qui vous conviennent.</p>
+                    <table>
+                        <tr>
+                            <td><input type="radio" id="family" name="aptmnt" value="family-docror"></td>
+                            <td><label for="family">Médecin de Famille</label></td>
+                        </tr>
+                        <tr>
+                            <td><input type="radio" id="urgent" name="aptmnt" value="urgent-care"></td>
+                            <td><label for="urgent">Soins Urgents</label></td>
+                        </tr>
+                        <tr>
+                            <td><input type="radio" id="xray" name="aptmnt" value="x-ray"></td>
+                            <td><label for="xray">Examen Radiologique</label></td>
+                        </tr>
+                        <tr>
+                            <td><input type="radio" id="bloodtest" name="aptmnt" value="x-ray"></td>
+                            <td><label for="bloodtest">Test sanguin - Numération Sanguine Complète (NSC)</label></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div id="appointmentdetails" class="mt-5">
+                <form id="appointment-form" method="post" action="payment-en.html" href="payment-en.html" autocapitalize="words">
+                    <table class="w-100">
+                    <tr class="row">
+                    <td id="calendertime" class="col-xl-9 pb-3">
+                        <details>
+                            <summary class="row">
+                                <span id="select" class="col-xl-7 mb-2">&#9654;&nbsp;Sélectionner une Date et une Heure</span>
+                                <span id="timezone" class="col-xl-5 mb-2" >Fuseau horaire : Heure normale du Pacifique (PST)</span>
+                            </summary>
+                         
+                            <div class="row">
+                                <div id="calendertbl" class="col-xl-6 pt-4">
+                                    <div class="month w-100"> 
+                                        <ul>
+                                            <li class="prev">&#10094;</li>
+                                            <li class="next">&#10095;</li>
+                                            <li>Février<br><span style="font-size:18px">2024</span></li>
+                                        </ul>
+                                    </div>
+                                    <div id="cal">
+                                        <ul class="weekdays">
+                                        <li>Lun</li>
+                                        <li>Mar</li>
+                                        <li>Mer</li>
+                                        <li>Jeu</li>
+                                        <li>Ven</li>
+                                        <li>Sam</li>
+                                        <li>Dim</li>
+                                        </ul>
+                                    
+                                        <ul class="days"> 
+                                        <li><span class="inactive">28</span></li>
+                                        <li><span class="inactive">29</span></li>
+                                        <li><span class="inactive">30</span></li>
+                                        <li><span class="inactive">31</span></li>
+                                        <li>1</li>
+                                        <li>2</li>
+                                        <li>3</li>
+                                        <li>4</li>
+                                        <li>5</li>
+                                        <li>6</li>
+                                        <li>7</li>
+                                        <li>8</li>
+                                        <li>9</li>
+                                        <li>10</li>
+                                        <li>10</li>
+                                        <li>11</li>
+                                        <li>12</li>
+                                        <li>13</li>
+                                        <li>14</li>
+                                        <li>15</li>
+                                        <li><span class="active">16</span></li>
+                                        <li>17</li>
+                                        <li>18</li>
+                                        <li>19</li>
+                                        <li>20</li>
+                                        <li>21</li>
+                                        <li>22</li>
+                                        <li>23</li>
+                                        <li>24</li>
+                                        <li>25</li>
+                                        <li>26</li>
+                                        <li>27</li>
+                                        <li>28</li>
+                                        <li>29</li>
+                                        <li><span class="inactive">1</span></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                              
+                                <div id="choosetime" class="col-xl-6 pt-4 w-90 text-center">
+                                <p id="date-content" >Vendredi, 16 Février</p>
+                                <ul class="timetable">
+                                <li>10:00 am</li>
+                                <li>10:30 am</li>
+                                <li>11:00 am</li>
+                                <li>11:30 am</li>
+                                <li>12:00 pm</li>
+                                <li>12:30 pm</li>
+                                <li>1:00 pm</li>
+                                <li>1:30 pm</li>
+                                <li>2:00 pm</li>
+                                <li>2:30 pm</li>
+                                </ul>
+                                <p><a href="#">Afficher toutes les sessions</a></p>
+                            </div>
+                 
+                        </details>   
+                    </td>
+                    <td id="service-details" class="col-xl-3">
+                        <details class="row">
+                            <summary>Détails du Service
+                                <hr class="border border-primary border-1.5 opacity-50">
+                            </summary>
+                            <div id="serdet" class="ps-4"><p><br>Soins Urgents<br>Le 16 février 2024 à 10 heures <br> Membre du Personnel # 1<br>1 hr<br>$20</p></div>
+                        </details>
+                        <input type="submit" id="make-appointment" class="button-click" value="suivante">
+                    </td>
+                </table>
+                </tr>
+            </form>
+        </div>
+        </div>
+        </main>
+
+        <!-- footer -->
+        <div id="footer" >
+            <div class="footer">
+                <div class="padding-row row " >                
+                    <div class="padding-column col-xl-9">
+                        <div class="row">
+                            <div class="col-xl-2">
+                                Heures d'ouverture:
+                            </div>
+                            <div class="col-xl-10">
+                                08:00 ~ 18:00 (du lundi au vendredi) <br>
+                                09:00 ~ 15:00 (samedi et dimanche)
+                            </div>
+                        </div>
+                        <div class="row">&nbsp;</div>
+                        <div class="row" >  
+                            <div class="col-xl-4">
+                                Réalisé et sécurisé par Team 7 <br>
+                                &copy;2024 Clinique Smith. 
+                            </div>
+                           
+                        </div>
+                    </div>
+                
+                    <div class="col-xl-2 icon-click">
+                        <div>
+                            <div class="row">&nbsp;</div>
+                            <a href="https://www.facebook.com/"><img class="share-icon" src="../assets/icons/facebook-white.png" width="40" alt="link to facebook" Title="link to facebook"></a>
+                            <a href="https://twitter.com/"><img class="share-icon" src="../assets/icons/twitter-white.png" width="45" alt="link to twitter" Title="link to twitter"></a>
+                            <a href="https://www.instagram.com/"><img class="share-icon" src="../assets/icons/instagram-white.png" width="40" alt="link to instagram" Title="link to instagram"></a>
+                            <div class="row">&nbsp;</div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
