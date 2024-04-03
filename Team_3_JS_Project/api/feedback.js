@@ -22,7 +22,7 @@ feedbackRouter.post('/insertFeedback', async (req, res) => {
             instructionClarityLevel:  feedbackInfo.instructionClarityLevel,
             satisfactionLevel:  feedbackInfo.satisfactionLevel,
         });
-        res.status(201).json({message: 'Feedback submit successfully'});
+        res.status(201).json({ feedbackId: feedbackId });
     } catch (error) {
         console.error('Feedback submission error: ', error);
         res.status(500).json({error:'Internal server error'});

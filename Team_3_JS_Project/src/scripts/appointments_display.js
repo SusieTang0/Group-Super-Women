@@ -6,10 +6,7 @@
 'use strict';
 import { getAppointments, getAppointmentTimes, createAppointment, deleteAppointment, updateAppointment, feedbackCompleted } from "./fetchAppointment.js";
 import { refundPayment } from "./fetchPayment.js";
-
-// appointment = [orderNumber,service,appointmentDate,bookingDate,status,paymentID, feedbackCompleted];
-
-
+import { createFeedback } from "./fetchFeedback.js";
 
 let appointmentList;
 let fbArray = [];
@@ -92,12 +89,14 @@ function displayAppointments(theStatus, appointmentList) {
   fbArray = [];
   for (let i = 0; i < appointmentList.length; i++) {
     if (appointmentList[i].status == theStatus || theStatus == 'total' || theStatus == 'Feedback') {
+      let timeStamp = appointmentList[i].createdTimeStamp.replace("T", ' ');
+      timeStamp = timeStamp.replace("Z", "");
       appointments += 
         `<tr class="listDisplay-tr">
           <td>${appointmentList[i].appointmentId}</td>
           <td>${appointmentList[i].serviceName}</td>
           <td>${appointmentList[i].apptDate} ${ appointmentList[i].apptTime }</td>
-          <td>${appointmentList[i].createdTimeStamp}</td>
+          <td>${timeStamp}</td>
           <td>${appointmentList[i].status}</td>`;
           
       if (appointmentList[i].status == 'uncompleted') {
@@ -112,7 +111,7 @@ function displayAppointments(theStatus, appointmentList) {
         } else {
           appointments += `<td><button id="btn-feedback${i}" class="btn-feedback" name="feedback-button" data-index="${i}" disabled style="background-color: lightgrey;">feedback</button></td></tr>`;
         }
-        fbArray.push({index: i, appointmentId: appointmentList[i].appointmentId});
+        fbArray.push({index: i, appointmentId: appointmentList[i].appointmentId, service: appointmentList[i].serviceName});
       }
 
       if (theStatus == 'Feedback') {
@@ -123,9 +122,6 @@ function displayAppointments(theStatus, appointmentList) {
       appointments += `<tr><td colspan="6"><div id="details${i}"></div></td></tr>`;
     }
   }
-
-  appointments += `</table><hr>`; 
-  document.getElementById('listDisplay').innerHTML = appointments;
 
   appointments += `</table><hr>`; 
   document.getElementById('listDisplay').innerHTML = appointments;
@@ -157,7 +153,9 @@ function displayAppointments(theStatus, appointmentList) {
 
 function feedback(index){
   let orderID = fbArray[index].appointmentId;
+  let service = fbArray[index].service;
   localStorage.setItem('orderID',orderID);
+  localStorage.setItem('service',service);
   let theId = "details"+index;
   document.getElementById(theId).innerHTML=index;
   let feedback = true;
@@ -186,17 +184,11 @@ function displayFeedback(theMsg){
   let message = theMsg +`<form id="form-feedback" class="my-3" method="get" action="#" autocomplete="on" autocapitalize="words"><table><tr><td colspan="5">Thank you for your patience to finish this form~! Please choose the option below.</td></tr>`;
 
   for(let index=0;index<questions.length;index++){
-    let optionType;
-    if(index == 0){
-      optionType='checkbox';
-    }else{
-      optionType='radio';
-    }
 
     message += `<tr id="question${index}"><td colspan="5"><label>${(index+1)}. ${questions[index][0]}</label></td></tr><tr>`;
     for(let i=1;i<questions[index].length;i++){
 
-      message += `<td><input type="${optionType}" id="answer${index}${i}" value="${questions[index][i]}" name="answer${index}">
+      message += `<td><input type="radio" id="answer${index}${i}" value="${questions[index][i]}" name="answer${index}">
       <label for="answer${index}${i}">${questions[index][i]}</label></td>`
     }
   }
@@ -239,12 +231,21 @@ function displayFeedback(theMsg){
 
 
 async function feedbackSub(){
-  let checkboxAns = document.querySelectorAll('input[type="checkbox"]:checked');
   let radioAns = document.querySelectorAll('input[type="radio"]:checked');
+  let feedbackData = {
+    serviceName: window.localStorage.getItem('service'),
+    source: radioAns[0].value,
+    preSchedule: radioAns[1].value,
+    promptReceptionLevel: radioAns[2].value,
+    instructionClarityLevel: radioAns[3].value,
+    satisfactionLevel: radioAns[4].value,
+  }
   localStorage.setItem('feedback', false);
   let apptId = window.localStorage.getItem('orderID');
   await feedbackCompleted(apptId);
+  await createFeedback(feedbackData);
   localStorage.removeItem('orderID');
+  localStorage.removeItem('service');
   location.reload();
 }
 
