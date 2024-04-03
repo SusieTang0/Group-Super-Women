@@ -4,7 +4,9 @@
 */
 
 'use strict';
-let bookingOrder = 'AE08R3';
+import { updateAppointment } from "./fetchAppointment.js";
+
+let newAppointmentId = localStorage.getItem("orderID");
 let dateMsg = "";
 let timeMsg = "";
 let servChecked = -1;
@@ -280,7 +282,7 @@ function lockService(id) {
 }
 
 function bookingNumber() {
-    let newString = (parseInt(bookingOrder, 16) + 1).toString(16).toUpperCase();
+    let newString = (parseInt(newAppointmentId, 16) + 1).toString(16).toUpperCase();
     let result = "";
     if (newString.length < 6) {
         for (let i = 0; i < (6 - newString.length); i++) {
@@ -308,6 +310,11 @@ function rescheduleInfo() {
         localStorage.setItem('boweekMsg', weeks[now.getDay()]);
         localStorage.setItem('bodateMsg', bodateMsg);
         localStorage.setItem('botimeMsg', botimeMsg);
+        let updateData = {
+            apptDate: orderDate,
+            apptTime: servDetailList[3]
+        }
+        updateAppointment(newAppointmentId, updateData);
 
 
 
@@ -320,6 +327,8 @@ function rescheduleInfo() {
     }
 
 }
+
+document.getElementById("make-appointment").addEventListener("click", rescheduleInfo);
 
 
 
