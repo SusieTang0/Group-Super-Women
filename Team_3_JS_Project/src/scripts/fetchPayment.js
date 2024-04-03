@@ -17,7 +17,8 @@ function postPaymentInfo(data){
       return response.json();
   })
   .then(data => {
-      payment.paymentId = data;  // returns paymentId
+    console.log("This payment is inserted into database successfully."); // return paymentId
+    return data;
   })
   .catch(error => {
       console.error('Error saving data:', error);
@@ -26,11 +27,11 @@ function postPaymentInfo(data){
 
 //createPayment(createdPaymentData);// returns: paymentId
 
-
 /* ************************************************************************************************************************** */
 /* get data from the HTML page when creating an payment */
-function refundPayment(data){
-  fetch('/updatePayment', {
+function refundPayment(paymentId, data){
+  let url = '/updateAppointment/' + paymentId;
+  fetch(url, {
     method: 'PUT',
     headers: {
         'Content-Type': 'application/json',
@@ -45,8 +46,13 @@ function refundPayment(data){
   })
   .then(data => {
       console.log("Payment for this order will be refunded.");  
+      return data;
   })
   .catch(error => {
       console.error('Error saving data:', error);
   });
 }
+ 
+
+
+

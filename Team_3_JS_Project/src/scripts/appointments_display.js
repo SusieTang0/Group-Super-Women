@@ -5,6 +5,9 @@
 
 'use strict';
 import { getAppointments, getAppointmentTimes, createAppointment, deleteAppointment, updateAppointment } from "./fetchAppointment.js";
+let list = await getAppointments(1);
+
+let response = await getAppointmentTimes("2024-04-10", "Blood Test");
 
 // appointment = [orderNumber,service,appointmentDate,bookingDate,status,paymentID, feedbackCompleted];
 let createdApptData = {
