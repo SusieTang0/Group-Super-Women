@@ -4,34 +4,22 @@
 // Script Date: March 11, 2024
 
 'use strict';
-import { getAppointments, getAppointmentTimes, createAppointment, deleteAppointment, updateAppointment } from "./fetchAppointment.js";
-
-let response = await getAppointmentTimes("2024-04-10", "Blood Test");
+import { getAppointments, getAppointmentTimes, createAppointment, deleteAppointment, updateAppointment, feedbackCompleted } from "./fetchAppointment.js";
+import { refundPayment } from "./fetchPayment.js";
 
 // appointment = [orderNumber,service,appointmentDate,bookingDate,status,paymentID, feedbackCompleted];
-let createdApptData = {
-  apptDate: "2024-04-10", // value to be taken when selected on the html page. 
-  apptTime: "05:00 PM", // value to be taken when selected on the html page.
-  customerId: 1,   // will be taken from localStorage the customerId after user signs in
-  paymentId: 6,   // NEED TO GET LIST OF PAYMENTS AND ADD 1 TO IT.
-  serviceName: "Blood Test",  // value to be taken when selected on the html page.
-  servicePrice: 30, // value to be taken when selected on the html page.
-}
-let updatedData = {
-  apptDate: "2024-05-01", // changed value to be taken when changing date on the html page. 
-  apptTime: "09:00 AM", // changed time to be taken when changing time on the html page.
-  serviceName: "X-Ray",  // changed value to be taken when changing serviceName on the html page. 
-  servicePrice: 500 // changed value to be taken when changing servicePrice on the html page. 
-}
+
+
 
 let appointmentList;
+let fbArray = [];
 
 window.addEventListener('load',startUp);
 window.addEventListener('load',setLeftSideBar);
 
 async function startUp(){
   try {
-    appointmentList = await getAppointments(1);
+    appointmentList = await getAppointments(1);     // changes according to the user's id in local storage
 
     let status = window.localStorage.getItem('status');
     if(status === null || status === undefined) {
@@ -101,7 +89,7 @@ function displayAppointments(theStatus, appointmentList) {
         <td>Booking<br>Date&nbsp;&&nbsp;Time</td>
         <td>Status</td>${optionTitle}
       </tr>`;
-
+  fbArray = [];
   for (let i = 0; i < appointmentList.length; i++) {
     if (appointmentList[i].status == theStatus || theStatus == 'total' || theStatus == 'Feedback') {
       appointments += 
@@ -111,7 +99,7 @@ function displayAppointments(theStatus, appointmentList) {
           <td>${appointmentList[i].apptDate} ${ appointmentList[i].apptTime }</td>
           <td>${appointmentList[i].createdTimeStamp}</td>
           <td>${appointmentList[i].status}</td>`;
-
+          
       if (appointmentList[i].status == 'uncompleted') {
         appointments += 
           `<td>
@@ -124,6 +112,7 @@ function displayAppointments(theStatus, appointmentList) {
         } else {
           appointments += `<td><button id="btn-feedback${i}" class="btn-feedback" name="feedback-button" data-index="${i}" disabled style="background-color: lightgrey;">feedback</button></td></tr>`;
         }
+        fbArray.push({index: i, appointmentId: appointmentList[i].appointmentId});
       }
 
       if (theStatus == 'Feedback') {
@@ -167,7 +156,7 @@ function displayAppointments(theStatus, appointmentList) {
 }
 
 function feedback(index){
-  let orderID = appointmentList[index].appointmentId;
+  let orderID = fbArray[index].appointmentId;
   localStorage.setItem('orderID',orderID);
   let theId = "details"+index;
   document.getElementById(theId).innerHTML=index;
@@ -176,7 +165,6 @@ function feedback(index){
   let newList = [appointmentList[index]];
 
   displayAppointments('Feedback',newList);
-  
   localStorage.setItem('feedbackIndex',index);
 }
 
@@ -213,12 +201,16 @@ function displayFeedback(theMsg){
     }
   }
   message+=`<tr>
-  <td colspan="5"><button class="w-50 btn-feedback" type="submit" name="feedback-submit">Submit</button></td></tr></table></form></td></tr></table>`;
+  <td colspan="5"><button class="w-50 btn-feedback" type="submit" name="feedback-submit" id="submitBtn">Submit</button></td></tr></table></form></td></tr></table>`;
 
 
   document.getElementById('listDisplay').innerHTML = message;
-  let submitBtn = document.getElementsByName('feedback-submit');
-  submitBtn[0].addEventListener('click', feedbackSub());
+  let submitBtn = document.getElementById('submitBtn');
+  submitBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    let index = window.localStorage.getItem('feedbackIndex');
+    feedbackSub(index);
+  });
   
   $('#form-feedback table tr').css({
     'justify-content': 'center'
@@ -246,11 +238,14 @@ function displayFeedback(theMsg){
 }
 
 
-function feedbackSub(){
+async function feedbackSub(){
   let checkboxAns = document.querySelectorAll('input[type="checkbox"]:checked');
   let radioAns = document.querySelectorAll('input[type="radio"]:checked');
-  localStorage.setItem('feedback',false);
+  localStorage.setItem('feedback', false);
+  let apptId = window.localStorage.getItem('orderID');
+  await feedbackCompleted(apptId);
   localStorage.removeItem('orderID');
+  location.reload();
 }
 
 /**
@@ -294,11 +289,14 @@ function rescheduleChange(){
  * @param {string} elementID 
  */
 
-function cancel(elementID){
+async function cancel(elementID){
+  let apptId = appointmentList[elementID].appointmentId;
   let result;
   result = window.confirm('Cancel this appointment?')
   if(result){
-    appointmentList.splice(elementID, 1);;
+    appointmentList.splice(elementID, 1);
     displayAppointments('total',appointmentList);
+    let paymentId = await deleteAppointment(apptId);
+    await refundPayment(paymentId.paymentId);
   }    
 }

@@ -29,7 +29,7 @@ paymentRouter.post('/insertPayment', async (req, res) => {
     
      res.status(204).json({ paymentId: newId });
   } catch (error) {
-    console.error('Error creating appointment:', error);
+    console.error('Error creating payment:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 
@@ -39,23 +39,8 @@ paymentRouter.put('/updatePayment/:paymentId', async (req, res) => {
   try {
     const paymentCollection = client.db('clinic').collection('payment');
     let paymentId = parseInt(req.params.paymentId);
-    const payment = req.body;
-    console.log(req.body.cardType);
-    let updatedData = {
-      cardType: payment.cardType,
-      cardNumber: payment.cardNumber, 
-      ownerName: payment.ownerName, 
-      cardCVV: payment.cardCVV, 
-      cardExpDate: payment.cardExpDate, 
-      servicePrice: payment.servicePrice, 
-      serviceFee: payment.serviceFee,
-      donation: payment.donation, 
-      totalAmount: payment.totalAmount,
-      needRefund: payment.needRefund,
-      createdTimeStamp: payment.createdTimeStamp
-    }
-    await paymentCollection.findOneAndUpdate({paymentId: paymentId}, { $set: updatedData});
-    res.status(204).send({ message: 'Payment updated successfully' });
+    let response = await paymentCollection.findOneAndUpdate({paymentId: paymentId}, { $set: { needRefund: true }});
+    res.status(204).send({ message: `Payment# ${response.paymentId} will be refunded` });
   } catch (error) {
     console.error('Error updating payment:', error);
     res.status(500).json({ error: 'Internal server error' });

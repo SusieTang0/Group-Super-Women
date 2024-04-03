@@ -85,8 +85,25 @@ export async function updateAppointment(appointmentId, updatedData) {
     if (!response.ok) {
         throw new Error('Network response was not ok: ' + response.status);
     } else {
+        console.log(response.json());
         console.log('Appointment updated successfully');
     }
 }
+
+export async function feedbackCompleted(appointmentId) {
+    let url = '/feedbackCompleted/' + appointmentId;
+    const response = await fetch(url, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });
+    if (!response.ok) {
+        throw new Error('Network response was not ok: ' + response.status);
+    } else {
+        console.log('Feedback Registered');
+    }
+}
+
 
   

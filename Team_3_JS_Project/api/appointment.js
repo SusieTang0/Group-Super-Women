@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const client = require('../db');
+const { feedbackCompleted } = require('../src/scripts/fetchAppointment');
 const appointmentRouter = express.Router();
 appointmentRouter.use(bodyParser.json());
 
@@ -76,10 +77,26 @@ appointmentRouter.put('/updateAppointment/:appointmentId', async (req, res) => {
     let appointmentId = parseInt(req.params.appointmentId);
     let updatedData = {
       apptDate: req.body.apptDate,
-      apptTime: req.body.apptTime
+      apptTime: req.body.apptTime,
+      serviceName: req.body.serviceName, 
+      servicePrice: req.body.servicePrice, 
+      feedbackCompleted: true
     }
     await appointmentCollection.findOneAndUpdate({appointmentId: appointmentId}, { $set: updatedData});
     res.status(204).json({ message: 'Appointment updated successfully' });
+  } catch (error) {
+    console.error('Error updating appointment:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+appointmentRouter.put('/feedbackCompleted/:appointmentId', async (req, res) => {
+  try {
+    const appointmentCollection = client.db('clinic').collection('appointment');
+
+    let appointmentId = parseInt(req.params.appointmentId);
+    let response = await appointmentCollection.findOneAndUpdate({appointmentId: appointmentId}, { $set: {feedbackCompleted: true}});
+    res.status(204).json({ message: `Feedback registered for appointment #${response.appointmentId}` });
   } catch (error) {
     console.error('Error updating appointment:', error);
     res.status(500).json({ error: 'Internal server error' });
