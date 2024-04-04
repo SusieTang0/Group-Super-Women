@@ -46,7 +46,6 @@ const submitButton = document.getElementById('submit').addEventListener('click',
         subject: formData.elements.namedItem('Subject').value,
         message: formData.elements.namedItem('message').value
     };
-    console.log(newContactInfo);
     try{
         const response = await fetch('/insertContact', {
             method:'POST',

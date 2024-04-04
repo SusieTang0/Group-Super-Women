@@ -28,7 +28,6 @@ export async function getAppointmentTimes(apptDate, serviceName) {
     for (let appt of data) {
         timeList.push(appt.apptTime);
     }
-    console.log(timeList);
     return timeList;
 }
 
