@@ -70,7 +70,6 @@ customerRouter.get('/getCustomerByJwt', async (req, res) => {
     }
     res.json(decoded);
   } catch (error) {
-    console.error('Error fetching customer:', error);
     logger.error('Error fetching customer:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
@@ -89,7 +88,6 @@ customerRouter.post('/checkCustomerEmail', async (req, res) => {
       res.status(200).json(false);
     }
   } catch (error) {
-    console.error('Error checking customer email:', error);
     logger.error('Error checking customer email:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
@@ -123,7 +121,6 @@ customerRouter.post('/insertCustomer', async (req, res) => {
     });
     res.status(201).json({ message: 'Customer created successfully' });
   } catch (error) {
-    console.error('Error creating customer:', error);
     logger.error('Error creating customer:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
@@ -148,7 +145,6 @@ customerRouter.post('/login', async (req, res) => {
     const token = generateToken(customer);
     res.json({ token: token, userId: customer.customerId, firstname: customer.firstname });
   } catch (error) {
-      console.error('Error logging in:', error);
       logger.error('Error logging in:', error);
       res.status(500).json({ error: 'Internal server error' });
   }
@@ -182,7 +178,6 @@ customerRouter.put('/updateCustomer/:customerId', async (req, res) => {
     // Send new JWT token back to client side
     res.status(200).json({ message: 'Customer updated successfully', token: newToken });
   } catch (error) {
-    console.error('Error updating customer:', error);
     logger.error('Error updating customer:', error);
     res.status(500).json({ error: 'Internal server error' });
   }

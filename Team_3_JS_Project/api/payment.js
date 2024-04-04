@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const client = require('../db');
-const logger = require('./logger');
+const logger = require('../logger');
 
 const paymentRouter = express.Router();
 paymentRouter.use(bodyParser.json());
@@ -32,7 +32,6 @@ paymentRouter.post('/insertPayment', async (req, res) => {
     
      res.json(paymentId);
   } catch (error) {
-    console.error('Error creating paymentment:', error);
     logger.error('Error creating paymentment:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
@@ -46,7 +45,6 @@ paymentRouter.put('/updatePayment/:paymentId', async (req, res) => {
     let response = await paymentCollection.findOneAndUpdate({paymentId: paymentId}, { $set: { needRefund: true }});
     res.status(204).send({ message: `Payment# ${response.paymentId} will be refunded` });
   } catch (error) {
-    console.error('Error updating payment:', error);
     logger.error('Error updating payment:', error);
     res.status(500).json({ error: 'Internal server error' });
   }

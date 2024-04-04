@@ -22,7 +22,6 @@ contactRouter.post('/insertContact', async(req, res) => {
         });
         res.status(201).json({message:'Submit query successfully'});
     } catch (error){
-        console.error('Submit query error:', error);
         logger.error('Submit query error:', error);
         res.status(500).json({error: 'Internal server error'});
     } 

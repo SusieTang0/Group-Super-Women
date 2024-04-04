@@ -12,7 +12,6 @@ appointmentRouter.get('/getAppointment', async (req, res) => {
     const appointments = await appointmentCollection.find({ customerId: customerId }).toArray();
     res.send(appointments);
   } catch (error) {
-    console.error('Error fetching appointment:', error);
     logger.error('Error fetching appointment:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
@@ -27,7 +26,6 @@ appointmentRouter.get('/getAppointmentTime', async (req, res) => {
     const appointments = await appointmentCollection.find(filter).toArray();
     res.json(appointments);
   } catch (error) {
-    console.error('Error fetching appointment time:', error);
     logger.error('Error fetching appointment time:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
@@ -53,7 +51,6 @@ appointmentRouter.post('/insertAppointment', async (req, res) => {
     });
     res.status(201).json(appointmentId);
   } catch (error) {
-    console.error('Error creating appointment:', error);
     logger.error('Error creating appointment:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
@@ -67,7 +64,6 @@ appointmentRouter.delete('/deleteAppointment', async (req, res) => {
     let response = await appointmentCollection.findOneAndDelete({appointmentId: appointmentId});
     res.status(200).json({paymentId: response.paymentId});
   } catch (error) {
-    console.error('Error deleting appointment:', error);
     logger.error('Error deleting appointment:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
@@ -85,7 +81,6 @@ appointmentRouter.put('/updateAppointment/:appointmentId', async (req, res) => {
     await appointmentCollection.findOneAndUpdate({appointmentId: appointmentId}, { $set: updatedData});
     res.status(204).json({ message: 'Appointment updated successfully' });
   } catch (error) {
-    console.error('Error updating appointment:', error);
     logger.error('Error updating appointment:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
@@ -99,7 +94,6 @@ appointmentRouter.put('/feedbackCompleted/:appointmentId', async (req, res) => {
     let response = await appointmentCollection.findOneAndUpdate({appointmentId: appointmentId}, { $set: {feedbackCompleted: true}});
     res.status(204).json({ message: `Feedback registered for appointment #${response.appointmentId}` });
   } catch (error) {
-    console.error('Error updating appointment:', error);
     logger.error('Error updating appointment:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
