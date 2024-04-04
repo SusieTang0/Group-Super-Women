@@ -6,6 +6,21 @@
 'use strict';
 import { updateAppointment } from "./fetchAppointment.js";
 
+class Appoitment {
+  constructor(serviceName, servicePrice, apptDate, apptTime, timeStamp, status, paymentID){
+    this.serviceName = serviceName,
+    this.servicePrice = servicePrice,
+    this.apptDate = apptDate,
+    this.apptTime = apptTime,
+    this.createdTimeStamp = timeStamp,
+    this.status = status,
+    this.paymentId = paymentID
+  }
+}
+
+const appt = new Appoitment();
+var timeRangeList = new Array();
+
 let newAppointmentId = localStorage.getItem("orderID");
 let dateMsg = "";
 let timeMsg = "";
@@ -39,7 +54,7 @@ let thisMonth = today.getMonth();
 let thisYear = today.getFullYear();
 let thisDay = today.getDay();
 
-let orderWeek;
+
 let orderDate;
 let orderTime;
 
@@ -47,6 +62,7 @@ makeCalender(thisMonth, thisYear);
 makeTimeTable(today);
 
 let serviceID = window.localStorage.getItem('serviceID');
+
 servDetail[0].innerHTML = "Order Number: #" + bookingNumber();
 servDetail[1].innerHTML = serItems[serviceID].alt;
 servDetail[5].innerHTML = "$" + serItems[serviceID].value;
@@ -90,33 +106,6 @@ decMonth[0].addEventListener('click', function() {
     }
 });
 
-function hookuptime() {
-    let timelist = document.querySelectorAll(".timetable li:not(.inactive)");
-    
-    function handleClick() {
-        let actTime = document.querySelectorAll(".timetable li.active");
-
-        if (dateChecked == 0) {
-            alert("Please choose a date first!");
-        } else {
-            if (actTime.length < 1) {
-                this.classList.toggle("active");
-            } else {
-                actTime[0].classList.toggle("active");
-                this.classList.toggle("active");
-            }
-
-            timeChecked = 1;
-            timeMsg = this.innerHTML;
-            servDetail[3].innerHTML = timeMsg;
-            servDetailList[3] = timeMsg;
-        }
-    }
-
-    timelist.forEach(item => {
-        item.addEventListener('click', handleClick);
-    });
-}
 
 function findDays(txtString) {
     const regExp = /\d+/;
@@ -206,12 +195,24 @@ function hookupDays() {
                 dateMsg = weeks[selday.getDay()] + ", " + months[curMonthN] + " " + findDays(dateTxt) + ", " + curYearN;
 
                 servDetail[2].innerHTML = dateMsg;
-                orderDate = months[curMonthN] + " " + findDays(dateTxt) + ", " + curYearN;
-                orderWeek = weeks[selday.getDay()];
+               
+               
                 document.getElementById("date-content").innerHTML = dateMsg;
                 dateChecked = 1;
                 selectedDay = selday;
-                makeTimeTable();
+
+                // add the value of apptDate
+                const apptMonth= curMonthN+1;
+                const apptDay = dateTxt;
+                const apptWeekday = weeks[selday.getDay()];
+
+                appt.apptDate = `${apptWeekday}, ${curYearN}-${(apptMonth<10)?"0"+apptMonth:apptMonth}-${(apptDay<10)?"0"+apptDay:apptDay}`;
+                orderDate = appt.apptDate;
+                var service = serItems[serviceID].alt;
+
+                getDataFromServer(appt.apptDate,service);
+
+              
             } else {
                 alert("Please choose a service first!");
             }
@@ -227,21 +228,6 @@ function hookupDays() {
     });
 }
 
-function resetDateTime() {
-    dateChecked = 0;
-    servDetail[2].innerHTML = "Choose Date.";
-    servDetail[3].innerHTML = "Choose time.";
-    document.getElementById("date-content").innerHTML = "Please choose a date first.";
-
-    calul.innerHTML = "";
-    makeCalender(curMonthN, curYearN);
-
-    let actTime = document.querySelectorAll(".timetable li.active");
-    if (actTime.length >= 1) {
-        actTime[0].classList.toggle("active");
-    }
-    timeChecked = 0;
-}
 
 function makeTimeTable() {
   let timeTable = ["08:00 AM","09:00 AM","10:00 AM","11:00 AM", "12:00 PM","01:00 PM","02:00 PM","03:00 PM","04:00 PM","05:00 PM"]
@@ -262,9 +248,38 @@ function makeTimeTable() {
   hookuptime();
 }
 
+function hookuptime() {
+  let timelist = document.querySelectorAll(".timetable li:not(.inactive)");
+  
+  function handleClick() {
+      let actTime = document.querySelectorAll(".timetable li.active");
+
+      if (dateChecked == 0) {
+          alert("Please choose a date first!");
+      } else {
+          if (actTime.length < 1) {
+              this.classList.toggle("active");
+          } else {
+              actTime[0].classList.toggle("active");
+              this.classList.toggle("active");
+          }
+
+          timeChecked = 1;
+          timeMsg = this.innerHTML;
+          orderTime = timeMsg;
+          servDetail[3].innerHTML = timeMsg;
+          servDetailList[3] = timeMsg;
+      }
+  }
+
+  timelist.forEach(item => {
+      item.addEventListener('click', handleClick);
+  });
+}
 
 function startUp() {
-    let serviceID = window.localStorage.getItem('serviceID');
+  alert("here");
+    let serviceId = window.localStorage.getItem('serviceID');
     if (serviceID != null) {
         lockService(serviceID);
     }
@@ -282,6 +297,43 @@ function lockService(id) {
 
 }
 
+
+function findInTimeList(theTimeTemplete){
+  if(timeRangeList.length > 0){
+    for(var i=0;i<timeRangeList.length;i++){
+      if(timeRangeList[i]===theTimeTemplete){
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+function getDataFromServer(apptDate,serviceName){
+
+  let url = '/getAppointmentTime?apptDate=' + apptDate + '&&serviceName=' + serviceName;
+  fetch(url)
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json(); 
+  })
+  .then(data => {
+    console.log('Data from server:', data);
+    timeRangeList = new Array();
+    for (let appt of data) {
+      timeRangeList.push(appt.apptTime);
+    }
+   
+    console.log(timeRangeList);
+
+    makeTimeTable();
+  })
+  .catch(error => {
+    console.error('There was a problem with the fetch operation:', error);
+  });
+}
 function bookingNumber() {
     let newString = (parseInt(newAppointmentId, 16) + 1).toString(16).toUpperCase();
     let result = "";
@@ -297,30 +349,17 @@ function bookingNumber() {
 
 function rescheduleInfo() {
     if ((servChecked != -1) && (dateChecked != 0) && (timeChecked != 0)) {
-        alert(servDetailList[3]);
-        localStorage.setItem('newDate', orderDate);
-        localStorage.setItem('newTime', servDetailList[3]);
-        localStorage.setItem('newWeek', orderWeek);
-
-        let now = new Date();
-        let hours = now.getHours();
-        let minutes = now.getMinutes();
-        let bodateMsg = months[now.getMonth() + 1] + " " + now.getDay() + ", " + curYearN;
-        let botimeMsg = (hours <= 12 ? hours : hours - 12) + ":" + minutes + " " + ((hours < 12 ? "am" : "pm"));
-
-        localStorage.setItem('boweekMsg', weeks[now.getDay()]);
-        localStorage.setItem('bodateMsg', bodateMsg);
-        localStorage.setItem('botimeMsg', botimeMsg);
+        
         let updateData = {
             apptDate: orderDate,
-            apptTime: servDetailList[3]
+            apptTime: orderTime
         }
         updateAppointment(newAppointmentId, updateData);
 
+        
 
 
-
-        window.location.href = 'appointment_display.html';
+        window.location.href = 'appointments-display.html';
         return true;
     } else {
         alert("Please finish making the appointment!")

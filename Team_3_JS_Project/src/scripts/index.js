@@ -36,7 +36,7 @@ function loginCheck(){
   let userID = window.localStorage.getItem('userId');
   if(userID != null){
     let first_name = window.localStorage.getItem('firstname');
-    let avatar_url = '../assets/upload/avater-sample.png';
+    let avatar_url = '../assets/upload/clinic-64.png';
     
     if(document.getElementById('loginBefore') != undefined){
       document.getElementById('loginBefore').innerHTML=
@@ -45,7 +45,7 @@ function loginCheck(){
       </a>
       <ul class="dropdown-menu dropdown-menu-end" id="dropdownInfo">
       <li><a class="dropdown-item" href="pages/personal-info.html">Personal Information</a></li>
-      <li><a class="dropdown-item" href="pages/appointment-display.html" id="totalAppoint" onclick="toAppointDis();">Appointments Management</a></li>
+      <li><a class="dropdown-item" href="pages/appointments-display.html" id="totalAppoint" onclick="toAppointDis();">Appointments Management</a></li>
       <li><a class="dropdown-item" href="index.html" onclick="logOut()">Log Out</a></li>
       </ul>`;
     }

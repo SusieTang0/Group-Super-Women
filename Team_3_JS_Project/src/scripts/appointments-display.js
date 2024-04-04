@@ -44,12 +44,12 @@ function setLeftSideBar(){
   let first_name = window.localStorage.getItem('firstname');
   let last_name = window.localStorage.getItem('lastname');
   // set name in leftsidebar
-  document.getElementById('personalInfoName').innerHTML = first_name+" "+last_name;
+  document.getElementById('personalInfoName').innerHTML = first_name;
 
   // set the src of each avatar on this page
   let avatars = document.getElementsByName('avatar');
   for(let i=0;i<avatars.length;i++){
-    avatars[i].src = window.localStorage.getItem('avatar');
+    avatars[i].src = "../assets/upload/clinic-64.png";
   }
 }
 

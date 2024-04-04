@@ -76,9 +76,6 @@ appointmentRouter.put('/updateAppointment/:appointmentId', async (req, res) => {
     let updatedData = {
       apptDate: req.body.apptDate,
       apptTime: req.body.apptTime,
-      serviceName: req.body.serviceName, 
-      servicePrice: req.body.servicePrice, 
-      feedbackCompleted: true
     }
     await appointmentCollection.findOneAndUpdate({appointmentId: appointmentId}, { $set: updatedData});
     res.status(204).json({ message: 'Appointment updated successfully' });
