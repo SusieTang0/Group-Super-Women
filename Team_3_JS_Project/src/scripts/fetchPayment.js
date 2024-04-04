@@ -3,7 +3,7 @@
 /* ************************************************************************************************************************** */
 /* get data from the HTML page when creating an payment */
 export async function createPayment(data){
-  fetch('/insertPayment', {
+  return fetch('/insertPayment', {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json',

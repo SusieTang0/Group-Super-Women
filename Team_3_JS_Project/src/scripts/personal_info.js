@@ -13,7 +13,6 @@ window.addEventListener('load',startUp);
 async function startUp(){
 
   let customer = await getCustomerInfo();
-  console.log(customer);
 
   // set the content of leftside-bar
   setLeftSideBar();

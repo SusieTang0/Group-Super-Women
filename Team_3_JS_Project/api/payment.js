@@ -29,7 +29,7 @@ paymentRouter.post('/insertPayment', async (req, res) => {
       needRefund: payment.needRefund
      });
     
-     res.status(201).json({ paymentId: paymentId });
+     res.json(paymentId);
   } catch (error) {
     console.error('Error creating appointment:', error);
     res.status(500).json({ error: 'Internal server error' });

@@ -4,7 +4,7 @@ import { createPayment } from "./fetchPayment.js";
 import { createAppointment } from "./fetchAppointment.js";
 
 
-const appt = JSON.parse(window.localStorage.getItem('apptObj'));;
+let appt = JSON.parse(window.localStorage.getItem('apptObj'));;
 var customer = new Object();
 
 class Payment{
@@ -73,11 +73,11 @@ function getServiceFee(){
   return;
 }
 
-function submitPayment(){
+async function submitPayment(){
  
   if(validateCardType() && validateOwnerName() && validateCardNumber() && validateCardCvv() && validateCardExpDate()){
     
-    appt.paymentId = createPayment(payment).paymentId;// here to call the function postPaymentInfo(payment),and get the paymentId
+    appt.paymentId = await createPayment(payment);// here to call the function postPaymentInfo(payment),and get the paymentId
     alert(appt.paymentId);
     console.log("paymentId = "+appt.paymentId);
     appt.appointmentId = createAppointment(appt).appointmentId;

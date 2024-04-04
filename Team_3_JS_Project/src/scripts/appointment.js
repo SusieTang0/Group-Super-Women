@@ -260,7 +260,7 @@ function makeTimeTable(datetime){
 
 function hookuptime() {
   
-  let timelist = document.querySelectorAll(".timetable li");
+  let timelist = document.querySelectorAll(".timetable li:not(.inactive)");
   
   function handleClick() {
     let actTime = document.querySelectorAll(".timetable li.active");

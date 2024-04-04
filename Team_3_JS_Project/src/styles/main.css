@@ -4,6 +4,7 @@ body {
   color: #434343;
   font-family: Verdana, Tahoma, sans-serif;
   font: 1rem;
+  caret-color: transparent;
 }
 
 #container {
