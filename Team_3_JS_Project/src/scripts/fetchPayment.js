@@ -2,24 +2,27 @@
 
 /* ************************************************************************************************************************** */
 /* get data from the HTML page when creating an payment */
-export async function postPaymentInfo(data){
-  try {
-    const response = await fetch('/insertPayment', {
-      method: 'POST',
-      headers: {
+export async function createPayment(data){
+  fetch('/insertPayment', {
+    method: 'POST',
+    headers: {
         'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data)
-    });
-    if (!response.ok) {
-      throw new Error('Network response was not ok: ' + response.status);
-    }
-    const data_1 = await response.json();
+    },
+    body: JSON.stringify(data)
+  })
+  .then(response => {
+      if (!response.ok) {
+          throw new Error('Network response was not ok: ' + response.status);
+      }
+      return response.json();
+  })
+  .then(data => {
     console.log("This payment is inserted into database successfully."); // return paymentId
-    return data_1;
-  } catch (error) {
-    console.error('Error saving data:', error);
-  }
+    return data;
+  })
+  .catch(error => {
+      console.error('Error saving data:', error);
+  });
 }
 
 //createPayment(createdPaymentData);// returns: paymentId

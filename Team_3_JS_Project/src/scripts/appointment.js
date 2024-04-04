@@ -4,7 +4,7 @@
 */
 
 'use strict';
-
+import { getAppointmentTimes } from "./fetchAppointment.js";
 
 class Appoitment {
   constructor(serviceName, servicePrice, apptDate, apptTime, timeStamp, status, paymentID){
@@ -57,54 +57,49 @@ makeCalender(thisMonth,thisYear);
 
 
 for (let k = 0; k < serItems.length; k++) {
-    serItems[k].onclick = function() {
-    if(servChecked != k) {
-      servDetail[1].innerHTML = serItems[k].id;
-      servDetail[5].innerHTML = "$"+serItems[k].value;
-      appt.serviceName = serItems[k].id;
-      appt.servicePrice = serItems[k].value;
-      servChecked = k;
-    if((dateChecked >= 0) || (timeChecked > 0)) resetDateTime();
-    }
-    }
+    serItems[k].addEventListener('click',()=>{
+      if(servChecked != k) {
+        servDetail[1].innerHTML = serItems[k].id;
+        servDetail[5].innerHTML = "$"+serItems[k].value;
+        appt.serviceName = serItems[k].id;
+        appt.servicePrice = serItems[k].value;
+        servChecked = k;
+      if((dateChecked >= 0) || (timeChecked > 0)) resetDateTime();
+      }
+    });
 }
 
-incMonth[0].onclick = function() {
+incMonth[0].addEventListener('click', function() {
+  findCurrentDate();
 
-    findCurrentDate();
+  if (curMonthN != 11) {
+      curMonthN++;
+  } else {
+      curMonthN = 0;
+      curYearN++;
+  }
 
-    if(curMonthN != 11) {
-        curMonthN++;
-    } else 
-    {
-        curMonthN = 0;
-        curYearN++;
-    }
-    
-    calul.innerHTML = "";
+  calul.innerHTML = "";
 
-    makeCalender(curMonthN,curYearN);
-    
-}
+  makeCalender(curMonthN, curYearN);
+});
 
-decMonth[0].onclick = function() {
+decMonth[0].addEventListener('click', function() {
+  findCurrentDate();
 
-    findCurrentDate();
+  if ((curYearN > thisYear) || ((curYearN == thisYear) && (curMonthN > thisMonth))) {
+      if (curMonthN != 0) {
+          curMonthN--;
+      } else {
+          curMonthN = 11;
+          curYearN--;
+      }
 
-    if((curYearN > thisYear) || ((curYearN == thisYear) && (curMonthN > thisMonth))) {
-    if(curMonthN != 0) {
-        curMonthN--;
-    } else 
-    {
-        curMonthN = 11;
-        curYearN--;
-    }
-    
-    calul.innerHTML = "";
+      calul.innerHTML = "";
 
-    makeCalender(curMonthN,curYearN);
-    }
-}
+      makeCalender(curMonthN, curYearN);
+  }
+});
 
 
 
@@ -113,118 +108,118 @@ function findDays(txtString) {
     return parseInt(txtString.match(regExp));
 }
 
-function findCurrentDate(){
-    currMonth = monthLable.innerHTML;
-    currYear = yearLable.innerHTML;
-    
-    curYearN = parseInt(currYear);
-    curMonthN = months.indexOf(currMonth);
-    
+function findCurrentDate() {
+  currMonth = monthLable.innerHTML;
+  currYear = yearLable.innerHTML;
+
+  curYearN = parseInt(currYear);
+  curMonthN = months.indexOf(currMonth);
 }
 
-function makeCalender(theMonth,theYear){
-  
-    let curday = new Date(theYear,theMonth,1);
+function makeCalender(theMonth, theYear) {
+    let curday = new Date(theYear, theMonth, 1);
     let day1stMonth = curday.getDay();
 
-    for (let di = 1; di <= day1stMonth; di++){
+    for (let di = 1; di <= day1stMonth; di++) {
         calul.innerHTML += "<li><span class=\"inactive\">&nbsp;</span></li>";
     }
 
-    if  ((theMonth == 1) && ((theYear & 3) == 0 && ((theYear % 25) != 0 || (theYear & 15) == 0)))
-    {
-        dayofMonth = daysInMonth[theMonth] +1;
-    } else
-    {
+    if ((theMonth == 1) && ((theYear & 3) == 0 && ((theYear % 25) != 0 || (theYear & 15) == 0))) {
+        dayofMonth = daysInMonth[theMonth] + 1;
+    } else {
         dayofMonth = daysInMonth[theMonth];
     }
 
-    for (let dj = 1; dj <= dayofMonth; dj++){
-      if (( theMonth == thisMonth ) && (dj < thisDate+3) && (theYear == thisYear) ){
-          calul.innerHTML += "<li><span class=\"inactive\">" + dj + "</span></li>";
-      } else {
+    for (let dj = 1; dj <= dayofMonth; dj++) {
+        if ((theMonth == thisMonth) && (dj < thisDate + 3) && (theYear == thisYear)) {
+            calul.innerHTML += "<li><span class=\"inactive\">" + dj + "</span></li>";
+        } else {
 
-      if ((dateChecked == 1) && (selectedDay.getDate() == dj) && (selectedDay.getMonth() == theMonth) && (selectedDay.getFullYear() == theYear)){
-          calul.innerHTML += "<li><span class=\"active\">" + dj + "</span></li>";
-      } else {
-          calul.innerHTML += "<li><span>" + dj + "</span></li>";
-      }
-      }
+            if ((dateChecked == 1) && (selectedDay.getDate() == dj) && (selectedDay.getMonth() == theMonth) && (selectedDay.getFullYear() == theYear)) {
+                calul.innerHTML += "<li><span class=\"active\">" + dj + "</span></li>";
+            } else {
+                calul.innerHTML += "<li><span>" + dj + "</span></li>";
+            }
+        }
     }
 
-    for (let dk = 1; dk <= 42 - (daysInMonth[thisMonth]+day1stMonth); dk++){
+    for (let dk = 1; dk <= 42 - (daysInMonth[thisMonth] + day1stMonth); dk++) {
         calul.innerHTML += "<li><span class=\"inactive\">&nbsp;</span></li>";
-    } 
+    }
 
     monthLable.innerHTML = months[theMonth];
     yearLable.innerHTML = theYear;
-    
+
     hookupDays();
 
 }
 
-function hookupDays(){
+function hookupDays() {
+  calenderDays = document.querySelectorAll(".days li span");
+  calDays = document.querySelectorAll(".days li");
 
-    calenderDays = document.querySelectorAll(".days li span");
-    calDays = document.querySelectorAll(".days li");
-    
-    findCurrentDate();
-    
-    for (let i = 0; i < calenderDays.length; i++) {
-        
-        if(calenderDays[i].className !== "inactive"){
-          calDays[i].onmouseover = function () {
-              calDays[i].style.backgroundColor = 'lightyellow';
-          }
-          calDays[i].onmouseout = function () {
-              calDays[i].style.backgroundColor = '#eee';
-          } 
-        } 
-    
-        calenderDays[i].onclick = function(){
-    
-            let actDay = document.querySelectorAll(".days li span.active");
-    
-            if(calenderDays[i].className !== "inactive"){
-    
-              if (servChecked >= 0) {
-              if ((actDay.length < 1)) {
-                  calenderDays[i].classList.toggle("active");
-              } else {
-                      actDay[0].classList.toggle("active");
-                      calenderDays[i].classList.toggle("active");
-              }
-    
-                let dateTxt = calenderDays[i].innerHTML;
-            
-                let selday = new Date(curYearN, curMonthN, findDays(dateTxt));
-            
-                dateMsg = weeks[selday.getDay()] + ", " + months[curMonthN] + " " + findDays(dateTxt) + ", " + curYearN;
-            
-                servDetail[2].innerHTML = dateMsg;
+  findCurrentDate();
 
-                // add the value of apptDate
-                const apptMonth= curMonthN+1;
-                const apptDay = dateTxt;
-                const apptWeekday = weeks[selday.getDay()];
-                alert(apptWeekday);
-                appt.apptDate = `${apptWeekday}, ${curYearN}-${(apptMonth<10)?"0"+apptMonth:apptMonth}-${(apptDay<10)?"0"+apptDay:apptDay}`;
-                
-                
-
-                document.getElementById("date-content").innerHTML = dateMsg; 
-                dateChecked = 1;
-                selectedDay =selday;
-                alert("here");
-                alert(appt.apptDate + appt.serviceName);
-                getDataFromServer(appt.apptDate,appt.serviceName);
-
-    } else {
-        alert("Please choose a service first!");
-    }
-        }
-    }
+  function handleMouseOver() {
+      if (this.className !== "inactive") {
+          this.style.backgroundColor = 'lightyellow';
+      }
   }
+
+  function handleMouseOut() {
+      if (this.className !== "inactive") {
+          this.style.backgroundColor = '#eee';
+      }
+  }
+
+  function handleClick() {
+      let actDay = document.querySelectorAll(".days li span.active");
+
+      if (this.className !== "inactive") {
+          if (servChecked >= 0) {
+              if (actDay.length < 1) {
+                  this.classList.toggle("active");
+              } else {
+                  actDay[0].classList.toggle("active");
+                  this.classList.toggle("active");
+              }
+
+              let dateTxt = this.innerHTML;
+
+              let selday = new Date(curYearN, curMonthN, findDays(dateTxt));
+
+              dateMsg = weeks[selday.getDay()] + ", " + months[curMonthN] + " " + findDays(dateTxt) + ", " + curYearN;
+
+              servDetail[2].innerHTML = dateMsg;
+
+              document.getElementById("date-content").innerHTML = dateMsg;
+              // add the value of apptDate
+              const apptMonth= curMonthN+1;
+              const apptDay = dateTxt;
+              const apptWeekday = weeks[selday.getDay()];
+
+              appt.apptDate = `${apptWeekday}, ${curYearN}-${(apptMonth<10)?"0"+apptMonth:apptMonth}-${(apptDay<10)?"0"+apptDay:apptDay}`;
+              
+              dateChecked = 1;
+              selectedDay = selday;
+             
+              //timeRangeList = getAppointmentTimes(appt.apptDate,appt.serviceName);
+              //console.log(timeRangeList);
+              getDataFromServer(appt.apptDate,appt.serviceName);
+              
+          } else {
+              alert("Please choose a service first!");
+          }
+      }
+  }
+
+  calDays.forEach((day, index) => {
+      if (calenderDays[index].className !== "inactive") {
+          day.addEventListener('mouseover', handleMouseOver);
+          day.addEventListener('mouseout', handleMouseOut);
+          calenderDays[index].addEventListener('click', handleClick);
+      }
+  });
 }
     
 function resetDateTime(){
@@ -244,9 +239,7 @@ function resetDateTime(){
 }
 
 function makeTimeTable(datetime){
-
-    let timeTable = ["08:00 AM","09:00 AM","10:00 AM","11:00 AM", "12:00 PM","01:00 PM",
-    "02:00 PM","03:00 PM","04:00 PM","05:00 PM"]
+    let timeTable = ["08:00 AM","09:00 AM","10:00 AM","11:00 AM", "12:00 PM","01:00 PM","02:00 PM","03:00 PM","04:00 PM","05:00 PM"]
 
     let result = "";
     for(var i=0;i<timeTable.length;i++){
@@ -254,38 +247,57 @@ function makeTimeTable(datetime){
         if(timeIsLocked){
           result += `<li class="inactive">`;
         }else{
-          result += `<li class="active">`;
+          result += `<li>`;
         }
         result += `${timeTable[i]}</li>`;
         
     }
-    alert(result);
+  
     document.getElementById("timeTable").innerHTML = result;
     hookuptime();
 }
 
-function hookuptime(){
-  let timelist = document.querySelectorAll(".timetable li.active");
-  for (let j = 0; j < timelist.length; j++) {
-    
-      timelist[j].onclick = function(){
-        if (dateChecked == 0){
-            alert("Please choose a date first!");
-        }
-        else{
-          
-          timeChecked = 1;
-          timeMsg = timelist[j].innerHTML;
-          servDetail[3].innerHTML = timeMsg;
-          appt.apptTime = timeMsg;
-        }
+
+function hookuptime() {
+  
+  let timelist = document.querySelectorAll(".timetable li");
+  
+  function handleClick() {
+    let actTime = document.querySelectorAll(".timetable li.active");
+    if (dateChecked == 0){
+      alert("Please choose a date first!");
+    }else{
+      if (actTime.length < 1) {
+          this.classList.toggle("active");
+      } else {
+          actTime[0].classList.toggle("active");
+          this.classList.toggle("active");
       }
+
+      timeChecked = 1;
+      timeMsg = this.innerHTML;
+      servDetail[3].innerHTML = timeMsg;
+      appt.apptTime = timeMsg;
+    }
+  }
+
+  timelist.forEach(item => {
+      item.addEventListener('click', handleClick);
+  });
+}
+
+function startUp() {
+  let serviceID = window.localStorage.getItem('serviceID');
+  if (serviceID != null) {
+      lockService(serviceID);
   }
 }
 
+
+
 function savelocalinfo(){
   if((servChecked != -1)&&(dateChecked != 0)&&(timeChecked != 0)){
-    const jsonAppt = JSON.stringify(appt);
+      const jsonAppt = JSON.stringify(appt);
       localStorage.setItem('apptObj', jsonAppt);
       return true;
   } else {
@@ -295,18 +307,7 @@ function savelocalinfo(){
 }
 
 
-function bookingNumber(){
-  let newString = (parseInt(bookingOrder, 16) + 1).toString(16).toUpperCase();
-  let result = "";
-  if(newString.length < 6){
-    for(let i=0;i < (6-newString.length);i++){
-      result+="0";
-    }
-  }
-  result += newString;
-  
-  return result;
-}
+
 
 function findInTimeList(theTimeTemplete){
   if(timeRangeList.length > 0){
@@ -320,6 +321,7 @@ function findInTimeList(theTimeTemplete){
 }
 
 function getDataFromServer(apptDate,serviceName){
+
   let url = '/getAppointmentTime?apptDate=' + apptDate + '&&serviceName=' + serviceName;
   fetch(url)
   .then(response => {
@@ -343,3 +345,6 @@ function getDataFromServer(apptDate,serviceName){
   });
 }
 
+
+document.getElementById("make-appointment").addEventListener("click", savelocalinfo);
+window.addEventListener('load', startUp);

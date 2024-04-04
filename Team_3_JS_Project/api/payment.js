@@ -11,25 +11,27 @@ paymentRouter.post('/insertPayment', async (req, res) => {
     const paymentCollection = client.db('clinic').collection('payment');
 
     let lastDoc = await paymentCollection.find().sort({_id:-1}).limit(1).toArray();
-    const newId = parseInt(lastDoc[0].paymentId) + 1;
+    const paymentId = parseInt(lastDoc[0].paymentId) + 1;
     const payment = req.body;
     
     await paymentCollection.insertOne({ 
-      paymentId: newId,
+      paymentId: paymentId,
       cardType: payment.cardType,
       cardNumber: payment.cardNumber, 
       ownerName: payment.ownerName, 
+      cvvNumber: payment.cvvNumber, 
+      cardExpDate: payment.cardExpDate, 
       servicePrice: payment.servicePrice, 
       serviceFee: payment.serviceFee,
       donation: payment.donation, 
       totalAmount: payment.totalAmount,
-      needRefund: payment.needRefund,
-      createdTimeStamp: payment.createdTimeStamp
+      createdTimeStamp: new Date().toISOString(),
+      needRefund: payment.needRefund
      });
     
-     res.status(204).json({ paymentId: newId });
+     res.status(201).json({ paymentId: paymentId });
   } catch (error) {
-    console.error('Error creating payment:', error);
+    console.error('Error creating appointment:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 
