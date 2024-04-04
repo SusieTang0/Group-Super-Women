@@ -278,7 +278,7 @@ function hookuptime() {
 }
 
 function startUp() {
-  alert("here");
+
     let serviceId = window.localStorage.getItem('serviceID');
     if (serviceID != null) {
         lockService(serviceID);

@@ -77,13 +77,13 @@ async function submitPayment(){
  
   if(validateCardType() && validateOwnerName() && validateCardNumber() && validateCardCvv() && validateCardExpDate()){
     
-    appt.paymentId = await createPayment(payment).paymentId;// here to call the function postPaymentInfo(payment),and get the paymentId
-    var appointmentId = await createAppointment(appt).appointmentId;
+    appt.paymentId = await createPayment(payment);// here to call the function postPaymentInfo(payment),and get the paymentId
+    let appointmentId = await createAppointment(appt);
     console.log("here is appointmentId :"+appointmentId);
     const jsonAppt = JSON.stringify(appt);
     localStorage.setItem('apptObj', jsonAppt);
     localStorage.setItem('appointmentId',appointmentId);
-    if(appt.paymentId != "undifined"){
+    if(appt.paymentId != "undefined"){
       window.location.href = 'book-completed.html';
     }
     

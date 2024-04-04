@@ -254,7 +254,7 @@ async function feedbackSub(){
  */
 
 function reschedule(elementID) {
-  alert('im here')
+
   let orderID = appointmentList[elementID].appointmentId;
   let servicesList = ['Family Doctor','Urgent Care','X-ray','Blood Test']
   let value = appointmentList[elementID].serviceName;
