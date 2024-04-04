@@ -2,27 +2,41 @@
 // Login function
 export async function login(email, password) {
   try {
-    // Send login reques
+    // Send login request
     const response = await fetch('/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ email, password }),
-    })
+    });
+
     const data = await response.json();
 
-    // If login successful, store JWT in local storage
-    if (response.ok) {
-      localStorage.setItem('jwt', data.token);
-      localStorage.setItem('userId', data.userId);
-      localStorage.setItem('firstname', data.firstname);
-      console.log('Login successful');
-    } else {
-      console.error('Login failed:', data.message);
+    // Check if response is not ok
+    if (!response.ok) {
+      // If login fails, check the status code and extract the error message
+      if (response.status === 400) {
+        // Extract error message from response body
+        const errorMessage = data.error || 'Login failed';
+        console.error('Login failed:', errorMessage);
+        throw new Error(errorMessage);
+      } else {
+        // Handle other types of errors
+        throw new Error('Login failed: ' + response.statusText);
+      }
     }
+
+    // If login successful, store JWT in local storage
+    
+    localStorage.setItem('jwt', data.token);
+    localStorage.setItem('userId', data.userId);
+    localStorage.setItem('firstname', data.firstname);
+    console.log('Login successful');
+    return response;
   } catch (error) {
-    console.error('Login failed:', error);
+    console.error('Login failed:', error.message);
+    throw error; // re-throw the error so that calling code can handle it
   }
 }
 
