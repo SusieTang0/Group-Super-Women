@@ -1,7 +1,7 @@
 'use strict';
 
 const appt = JSON.parse(window.localStorage.getItem("apptObj")) ;
-var appointmentId = window.localStorage.getItem("appointmentId")
+var appointmentId = window.localStorage.getItem("appointmentId");
 
 
 window.addEventListener("load",()=>{

@@ -79,10 +79,11 @@ async function submitPayment(){
     
     appt.paymentId = await createPayment(payment).paymentId;// here to call the function postPaymentInfo(payment),and get the paymentId
     var appointmentId = await createAppointment(appt).appointmentId;
+    console.log("here is appointmentId :"+appointmentId);
     const jsonAppt = JSON.stringify(appt);
     localStorage.setItem('apptObj', jsonAppt);
     localStorage.setItem('appointmentId',appointmentId);
-    if(appt.appointmentId != "undifined" && appt.paymentId != "undifined"){
+    if(appt.paymentId != "undifined"){
       window.location.href = 'book-completed.html';
     }
     
