@@ -36,6 +36,11 @@ appointmentRouter.post('/insertAppointment', async (req, res) => {
     const appointmentCollection = client.db('clinic').collection('appointment');
     let lastDoc = await appointmentCollection.find().sort({_id:-1}).limit(1).toArray();
     const appointmentId = parseInt(lastDoc[0].appointmentId) + 1;
+    const currentDate = new Date();
+    const formattedDate = `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1).toString().padStart(2, '0')}-${currentDate.getDate().toString().padStart(2, '0')}`;
+    const hours = currentDate.getHours() > 12 ? currentDate.getHours() - 12 : currentDate.getHours();
+    const formattedTime = `${hours.toString().padStart(2, '0')}:${currentDate.getMinutes().toString().padStart(2, '0')} ${currentDate.getHours() >= 12 ? 'PM' : 'AM'}`;
+    const formattedDateTime = `${formattedDate} ${formattedTime}`;
     const appt = req.body;
     await appointmentCollection.insertOne({ 
       appointmentId: appointmentId,
@@ -43,7 +48,7 @@ appointmentRouter.post('/insertAppointment', async (req, res) => {
       servicePrice: appt.servicePrice,
       apptDate: appt.apptDate,
       apptTime: appt.apptTime,
-      createdTimeStamp: new Date().toISOString(),
+      createdTimeStamp: formattedDateTime,
       status: "uncompleted",
       customerId: appt.customerId,
       paymentId: appt.paymentId,
@@ -74,10 +79,15 @@ appointmentRouter.put('/updateAppointment/:appointmentId', async (req, res) => {
     const appointmentCollection = client.db('clinic').collection('appointment');
 
     let appointmentId = parseInt(req.params.appointmentId);
+    const currentDate = new Date();
+    const formattedDate = `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1).toString().padStart(2, '0')}-${currentDate.getDate().toString().padStart(2, '0')}`;
+    const hours = currentDate.getHours() > 12 ? currentDate.getHours() - 12 : currentDate.getHours();
+    const formattedTime = `${hours.toString().padStart(2, '0')}:${currentDate.getMinutes().toString().padStart(2, '0')} ${currentDate.getHours() >= 12 ? 'PM' : 'AM'}`;
+    const formattedDateTime = `${formattedDate} ${formattedTime}`;
     let updatedData = {
       apptDate: req.body.apptDate,
       apptTime: req.body.apptTime,
-      createdTimeStamp: new Date().toISOString()
+      createdTimeStamp: formattedDateTime
     }
     await appointmentCollection.findOneAndUpdate({appointmentId: appointmentId}, { $set: updatedData});
     res.status(204).json({ message: 'Appointment updated successfully' });
