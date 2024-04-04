@@ -144,6 +144,10 @@ main h5 {
   color: rgba(1, 86, 173, 0.8);
 }
 
+input, textarea {
+  caret-color: darkgrey;
+}
+
 .footer {
   width: 100%;
   height: auto;
