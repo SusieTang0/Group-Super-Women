@@ -355,9 +355,6 @@ function rescheduleInfo() {
         }
         updateAppointment(newAppointmentId, updateData);
 
-        
-
-
         window.location.href = 'appointments-display.html';
         return true;
     } else {
@@ -368,8 +365,6 @@ function rescheduleInfo() {
 }
 
 document.getElementById("make-appointment").addEventListener("click", rescheduleInfo);
-
-
 
 
 window.addEventListener('load', startUp);
