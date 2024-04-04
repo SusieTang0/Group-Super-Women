@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const client = require('../db');
+const logger = require('../logger');
 
 const contactRouter = express.Router();
 contactRouter.use(bodyParser.json());
@@ -19,9 +20,10 @@ contactRouter.post('/insertContact', async(req, res) => {
             subject: contactInfo.subject,
             message: contactInfo.message
         });
-        res.status(201).json({message:'Submit successfully'});
+        res.status(201).json({message:'Submit query successfully'});
     } catch (error){
-        console.error('Submission error:', error);
+        console.error('Submit query error:', error);
+        logger.error('Submit query error:', error);
         res.status(500).json({error: 'Internal server error'});
     } 
 });

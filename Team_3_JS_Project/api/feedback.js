@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const client = require('../db');
+const logger = require('./logger');
 
 const feedbackRouter = express.Router();
 feedbackRouter.use(bodyParser.json());
@@ -25,6 +26,7 @@ feedbackRouter.post('/insertFeedback', async (req, res) => {
         res.status(201).json({ feedbackId: feedbackId });
     } catch (error) {
         console.error('Feedback submission error: ', error);
+        logger.error('Feedback submission error: ', error);
         res.status(500).json({error:'Internal server error'});
     }
 });

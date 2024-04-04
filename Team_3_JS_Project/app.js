@@ -8,10 +8,6 @@ const path = require('path');
 const client = require('./db');
 const logger = require('./logger');
 
-logger.info('test info');
-
-logger.error('testing error');
-
 const port = process.env.PORT || 3000;
 
 const app = express();
