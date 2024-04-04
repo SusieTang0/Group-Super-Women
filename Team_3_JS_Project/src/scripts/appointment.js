@@ -238,7 +238,7 @@ function resetDateTime(){
     timeChecked = 0;
 }
 
-function makeTimeTable(datetime){
+function makeTimeTable(){
     let timeTable = ["08:00 AM","09:00 AM","10:00 AM","11:00 AM", "12:00 PM","01:00 PM","02:00 PM","03:00 PM","04:00 PM","05:00 PM"]
 
     let result = "";
@@ -338,7 +338,7 @@ function getDataFromServer(apptDate,serviceName){
     }
    
     console.log(timeRangeList);
-    makeTimeTable(apptDate);
+    makeTimeTable();
   })
   .catch(error => {
     console.error('There was a problem with the fetch operation:', error);

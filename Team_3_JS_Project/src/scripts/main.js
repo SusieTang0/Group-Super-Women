@@ -45,7 +45,7 @@ function loginCheck(){
       </a>
       <ul class="dropdown-menu dropdown-menu-end" id="dropdownInfo">
       <li><a class="dropdown-item" href="personal-info.html">Personal Information</a></li>
-      <li><a class="dropdown-item" href="appointment-display.html" id="totalAppoint" onclick="toAppointDis();">Appointments Management</a></li>
+      <li><a class="dropdown-item" href="appointment_display.html" id="totalAppoint" onclick="toAppointDis();">Appointments Management</a></li>
       <li><a class="dropdown-item" href="../index.html" onclick="logOut()">Log Out</a></li>
       </ul>`;
     }

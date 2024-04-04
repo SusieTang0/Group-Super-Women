@@ -211,7 +211,7 @@ function hookupDays() {
                 document.getElementById("date-content").innerHTML = dateMsg;
                 dateChecked = 1;
                 selectedDay = selday;
-                makeTimeTable(selectedDay);
+                makeTimeTable();
             } else {
                 alert("Please choose a service first!");
             }
@@ -243,22 +243,23 @@ function resetDateTime() {
     timeChecked = 0;
 }
 
-function makeTimeTable(datetime) {
+function makeTimeTable() {
+  let timeTable = ["08:00 AM","09:00 AM","10:00 AM","11:00 AM", "12:00 PM","01:00 PM","02:00 PM","03:00 PM","04:00 PM","05:00 PM"]
 
-    let timetblele = document.querySelector('.timetable');
+  let result = "";
+  for(var i=0;i<timeTable.length;i++){
+      let timeIsLocked = findInTimeList(timeTable[i]);
+      if(timeIsLocked){
+        result += `<li class="inactive">`;
+      }else{
+        result += `<li>`;
+      }
+      result += `${timeTable[i]}</li>`;
+      
+  }
 
-    timetblele.innerHTML = "";
-
-    if ((datetime.getDay() == 0) || (datetime.getDay() == 6)) {
-        for (let j = 9; j <= 14; j++) {
-            timetblele.innerHTML += "<li>" + (j <= 12 ? j : j - 12) + ":00 " + ((j < 12 ? "am" : "pm")) + "</li>";
-        }
-    } else {
-        for (let i = 8; i <= 17; i++) {
-            timetblele.innerHTML += "<li>" + (i <= 12 ? i : i - 12) + ":00 " + ((i < 12 ? "am" : "pm")) + "</li>";
-        }
-    }
-    hookuptime();
+  document.getElementById("timeTable").innerHTML = result;
+  hookuptime();
 }
 
 
@@ -319,7 +320,7 @@ function rescheduleInfo() {
 
 
 
-        window.location.href = 'appointment-display.html';
+        window.location.href = 'appointment_display.html';
         return true;
     } else {
         alert("Please finish making the appointment!")
