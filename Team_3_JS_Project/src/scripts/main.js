@@ -1,7 +1,7 @@
 // JavaScript source code
 // main.js 
 
-// Script Date: March 11, 2024
+// Update Date: April 4, 2024
 
 /**
  * custom info array:[firstname, lastname, email, phoneNumber,password, avatar-url, address, city, provice, postcode,contact_name,contact_phone,ifSendEmail]

@@ -1,7 +1,7 @@
 // JavaScript source code
 // appointments_display.js 
 
-// Script Date: March 11, 2024
+// Updated Date: April 4, 2024
 
 'use strict';
 import { getAppointments, getAppointmentTimes, createAppointment, deleteAppointment, updateAppointment, feedbackCompleted } from "./fetchAppointment.js";

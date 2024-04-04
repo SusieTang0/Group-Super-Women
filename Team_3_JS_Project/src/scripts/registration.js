@@ -1,6 +1,5 @@
 /* For validating the registration form 
-    Author: Jing Yang
-    Date: Mar 14, 2024
+    Date: April 4, 2024
 */
 
 'use strict';

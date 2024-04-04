@@ -1,6 +1,5 @@
 /* Purpose: Choose date and time for the appointment
-   Author: Jing Yang
-   Date:   March 4, 2024
+   Date:   April 4, 2024
 */
 
 'use strict';
