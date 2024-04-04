@@ -92,7 +92,6 @@ editForm.addEventListener("submit", async function(event) {
   }
   console.log(newData);
   console.log(userId);
-  debugger;
   await updateCustomer(userId, newData).then(() => {
     window.location.href = "personal-info.html";
     window.location.reload;
