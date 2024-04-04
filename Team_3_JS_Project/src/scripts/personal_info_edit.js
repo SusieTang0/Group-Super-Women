@@ -90,8 +90,6 @@ editForm.addEventListener("submit", async function(event) {
     contactPhone: contactphoneElem.value,
     acceptEmailMsg: acceptEmailMsg
   }
-  console.log(newData);
-  console.log(userId);
   await updateCustomer(userId, newData).then(() => {
     window.location.href = "personal-info.html";
     window.location.reload;
