@@ -3,8 +3,13 @@ Web Service - Final Project - Team 3 - Group Super Woman
 ------------------------------------------
 1. Team Members 
 ------------------------------------------
+Leah Teresa Yapp 
 
+Yingying Wei
 
+Fei Li 
+
+Shuting Tang
 
 ------------------------------------------
 2. Project Update Details:
