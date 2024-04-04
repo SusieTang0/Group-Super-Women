@@ -1,4 +1,4 @@
-Web Service - Final Project - Team 3
+Web Service - Final Project - Team 3 - Group Super Woman
 ==========================================
 ------------------------------------------
 1. Team Members 
