@@ -10,6 +10,7 @@ window.addEventListener("load",()=>{
   document.getElementById("apptDate").innerText = appt.apptDate;
   document.getElementById("apptTime").innerText = appt.apptTime;
   localStorage.removeItem("apptObj");
+  localStorage.removeItem("appointmentId");
 });
 
 

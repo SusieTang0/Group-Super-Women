@@ -237,8 +237,14 @@ function resetDateTime(){
     timeChecked = 0;
 }
 
-function makeTimeTable(){
-    let timeTable = ["08:00 AM","09:00 AM","10:00 AM","11:00 AM", "12:00 PM","01:00 PM","02:00 PM","03:00 PM","04:00 PM","05:00 PM"]
+function makeTimeTable(datetime){
+    let timeTable = new Array();
+
+    if((datetime.getDay() == 0) || (datetime.getDay() == 6) ){
+      timeTable = ["09:00 AM","10:00 AM","11:00 AM", "12:00 PM","01:00 PM","02:00 PM"];
+    } else {
+      timeTable = ["08:00 AM","09:00 AM","10:00 AM","11:00 AM", "12:00 PM","01:00 PM","02:00 PM","03:00 PM","04:00 PM","05:00 PM"];
+    }
 
     let result = "";
     for(var i=0;i<timeTable.length;i++){
@@ -337,7 +343,7 @@ function getDataFromServer(apptDate,serviceName){
     }
    
     console.log(timeRangeList);
-    makeTimeTable();
+    makeTimeTable(selectedDay);
   })
   .catch(error => {
     console.error('There was a problem with the fetch operation:', error);
